@@ -103,6 +103,8 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
             case 6 : //系统优化
                 break;
             case 7 : //高级工具
+                Intent atoolIntent  = new Intent(this, AToolActivity.class);
+                startActivity(atoolIntent);
                 break;
             case 8 : //设置中心
                 break;

@@ -44,5 +44,9 @@
     <string name="title_activity_setup_guide3">SetupGuide3Activity</string>
     <string name="title_activity_select_contact">SelectContactActivity</string>
     <string name="title_activity_setup_guide4">SetupGuide4Activity</string>
-
+    <string name="title_activity_atool">AToolActivity</string>
+    <string name="atool">高级工具</string>
+    <string name="query">手机号码归属地查询</string>
+    <string name="title_activity_query_number">QueryNumberActivity</string>
+    <string name="bt_query">查询</string>
 </resources>

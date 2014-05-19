@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.mk.security.R;
 import com.mk.security.utils.MD5Encoder;
+import com.mk.security.utils.MkUtils;
 
 public class LostProtectedActivity extends ActionBarActivity implements View.OnClickListener {
     private SharedPreferences sp;
@@ -143,7 +145,7 @@ public class LostProtectedActivity extends ActionBarActivity implements View.OnC
                 } else {
                     String str = sp.getString("password", "");
                     if (MD5Encoder.encode(pwd).equals(str)) {
-                        if(!isSetupGuide())
+                        if(isSetupGuide())
                         {
                             setContentView(R.layout.lost_protected);
                             tv_protectedNumber = (TextView) findViewById(R.id.tv_lost_protected_number);
@@ -194,6 +196,7 @@ public class LostProtectedActivity extends ActionBarActivity implements View.OnC
                 break;
 
             case R.id.tv_lost_protected_guide : //重新进入设置向导
+                Log.i(MkUtils.TAG, "重新进入设置向导");
                 finish();
                 Intent setupGuideIntent = new Intent(this, SetupGuide1Activity.class);
                 startActivity(setupGuideIntent);

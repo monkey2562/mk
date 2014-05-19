@@ -1,6 +1,8 @@
 package com.mk.security.ui;
 
 import android.app.AlertDialog;
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,6 +17,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
 import com.mk.security.R;
+import com.mk.security.receiver.MyAdminReceiver;
 
 public class SetupGuide4Activity extends ActionBarActivity  implements View.OnClickListener {
     private Button bt_pervious;
@@ -83,9 +86,7 @@ public class SetupGuide4Activity extends ActionBarActivity  implements View.OnCl
         switch (view.getId()) {
             case R.id.bt_guide_finish :
                 if(cb_protected.isChecked()) {
-                    SharedPreferences.Editor editor = sp.edit();
-                    editor.putBoolean("setupGuide", true);//记录是否已经进行过设置向导了
-                    editor.commit();
+                    finishSetupGuide();
                     finish();
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -127,6 +128,23 @@ public class SetupGuide4Activity extends ActionBarActivity  implements View.OnCl
 
             default :
                 break;
+        }
+    }
+
+    private void finishSetupGuide(){
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putBoolean("setupGuide", true);//记录是否已经进行过设置向导了
+        editor.commit();
+
+        //拿到一个设备管理器
+        DevicePolicyManager devicePolicyManager = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
+        //new一个新的组件出来，用来启动注册管理器的界面
+        ComponentName componentName = new ComponentName(this, MyAdminReceiver.class);
+        //判断是否已经注册，没有就进行注册
+        if(!devicePolicyManager.isAdminActive(componentName)){
+            Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+            intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, componentName);
+            startActivity(intent);
         }
     }
 }
