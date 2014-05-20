@@ -93,6 +93,12 @@
             android:name="com.mk.security.ui.QueryNumberActivity"
             android:label="@string/title_activity_query_number" >
         </activity>
+
+        <service
+            android:name="com.mk.security.service.AddressService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

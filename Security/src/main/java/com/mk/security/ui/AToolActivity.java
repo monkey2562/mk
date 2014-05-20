@@ -85,7 +85,7 @@ public class AToolActivity extends ActionBarActivity implements View.OnClickList
                     pd = new ProgressDialog(this);
                     pd.setMessage("正在下载数据库...");
                     pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-//                    pd.setCancelable(false);
+                    pd.setCancelable(false);
                     pd.show();
                     new Thread(){
                         @Override
