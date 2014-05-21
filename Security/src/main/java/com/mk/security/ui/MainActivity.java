@@ -3,6 +3,7 @@ package com.mk.security.ui;
 
 import com.mk.security.adapter.MainUIAdapter;
 import com.mk.security.R;
+import com.mk.security.utils.MkUtils;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -86,7 +87,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         switch (i) {
             case 0 : //手机防盗
-                Log.i("Security","手机防盗");
+                Log.i(MkUtils.TAG,"手机防盗");
                 Intent intent = new Intent(this, LostProtectedActivity.class);
                 startActivity(intent);
                 break;

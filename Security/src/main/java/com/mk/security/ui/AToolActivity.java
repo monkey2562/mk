@@ -1,8 +1,13 @@
 package com.mk.security.ui;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -11,11 +16,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mk.security.R;
 import com.mk.security.engine.DownloadTask;
+import com.mk.security.service.AddressService;
 
 import java.io.File;
 
@@ -24,6 +32,14 @@ public class AToolActivity extends ActionBarActivity implements View.OnClickList
     private static final int SUCCESS = 1;
     private ProgressDialog pd;
     private TextView tv_atool_query;
+    private TextView tv_atool_number_service_state;
+    private CheckBox cb_atool_state;
+    private TextView tv_atool_select_bg;
+    private TextView tv_atool_change_location;
+    private Intent serviceIntent;
+    private SharedPreferences sp;
+
+    private TextView tv_atool_number_security;
 
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler(){
@@ -48,8 +64,39 @@ public class AToolActivity extends ActionBarActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_atool);
 
+        sp = getSharedPreferences("config", Context.MODE_PRIVATE);
+
         tv_atool_query = (TextView) findViewById(R.id.tv_atool_query);
         tv_atool_query.setOnClickListener(this);
+
+        tv_atool_select_bg = (TextView) findViewById(R.id.tv_atool_select_bg);
+        tv_atool_select_bg.setOnClickListener(this);
+
+        tv_atool_change_location = (TextView) findViewById(R.id.tv_atool_change_location);
+        tv_atool_change_location.setOnClickListener(this);
+
+        tv_atool_number_service_state = (TextView) findViewById(R.id.tv_atool_number_service_state);
+        cb_atool_state = (CheckBox) findViewById(R.id.cb_atool_state);
+        serviceIntent = new Intent(this, AddressService.class);
+
+        cb_atool_state.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    startService(serviceIntent);
+                    tv_atool_number_service_state.setTextColor(Color.BLACK);
+                    tv_atool_number_service_state.setText("归属地服务已开启");
+                } else {
+                    stopService(serviceIntent);
+                    tv_atool_number_service_state.setTextColor(Color.RED);
+                    tv_atool_number_service_state.setText(R.string.number_service_state);
+                }
+            }
+        });
+
+        //通讯卫士
+        tv_atool_number_security = (TextView) findViewById(R.id.tv_atool_number_security);
+        tv_atool_number_security.setOnClickListener(this);
 
     }
 
@@ -76,45 +123,83 @@ public class AToolActivity extends ActionBarActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.tv_atool_query:
-                if(isDBExist()){
-                    Intent intent = new Intent(this,QueryNumberActivity.class);
-                    startActivity(intent);
-                } else {
-                    //提示用户下载数据库
-                    pd = new ProgressDialog(this);
-                    pd.setMessage("正在下载数据库...");
-                    pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                    pd.setCancelable(false);
-                    pd.show();
-                    new Thread(){
-                        @Override
-                        public void run() {
-                            String path = getResources().getString(R.string.serverdb);
-                            File dir = new File(Environment.getExternalStorageDirectory(), "/security/db");
-                            if (!dir.exists()) {
-                                dir.mkdirs();
-                            }
-                            String dbPath = Environment.getExternalStorageDirectory()+ "/security/db/data.db";
-                            try {
-                                //这个类，我们在做更新apk的时候已经写好的啦，现在直接拿过来用就可以啦
-                                DownloadTask.getFile(path, dbPath, pd);
-                                pd.dismiss();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                pd.dismiss();
-                                Message message = new Message();
-                                message.what = ERROR;
-                                handler.sendMessage(message);
-                            }
-
-                        };
-                    }.start();
-                }
+            case R.id.tv_atool_query://归属地查询
+                query();
+                break;
+            case R.id.tv_atool_select_bg://归属地显示风格
+                selectStyle();
+                break;
+            case R.id.tv_atool_change_location ://显示位置的改变
+                Intent intent = new Intent(this, DragViewActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.tv_atool_number_security://通讯卫士
+                Intent numberIntent = new Intent(this, NumberSecurityActivity.class);
+                startActivity(numberIntent);
                 break;
             default :
                 break;
         }
+    }
+
+    private void query(){
+        if(isDBExist()){
+            Intent intent = new Intent(this,QueryNumberActivity.class);
+            startActivity(intent);
+        } else {
+            //提示用户下载数据库
+            pd = new ProgressDialog(this);
+            pd.setMessage("正在下载数据库...");
+            pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            pd.setCancelable(false);
+            pd.show();
+            new Thread(){
+                @Override
+                public void run() {
+                    String path = getResources().getString(R.string.serverdb);
+                    File dir = new File(Environment.getExternalStorageDirectory(), "/security/db");
+                    if (!dir.exists()) {
+                        dir.mkdirs();
+                    }
+                    String dbPath = Environment.getExternalStorageDirectory()+ "/security/db/data.db";
+                    try {
+                        //这个类，我们在做更新apk的时候已经写好的啦，现在直接拿过来用就可以啦
+                        DownloadTask.getFile(path, dbPath, pd);
+                        pd.dismiss();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        pd.dismiss();
+                        Message message = new Message();
+                        message.what = ERROR;
+                        handler.sendMessage(message);
+                    }
+
+                };
+            }.start();
+        }
+    }
+
+    //显示风格的对话框，我准备了5张不同风格的背景图片，根据用户选择的风格不一样，设置不同的背景
+    private void selectStyle() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("归属地显示风格");
+        String[] items = new String[] {"半透明", "活力橙", "苹果绿", "孔雀蓝", "金属灰"};
+        builder.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putInt("background", i);
+                editor.commit();
+            }
+        });
+
+        builder.setPositiveButton(android.R.string.ok,new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.create().show();
     }
 
     private boolean isDBExist() {
