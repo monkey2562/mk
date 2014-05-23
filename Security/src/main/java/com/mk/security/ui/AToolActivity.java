@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -23,7 +24,9 @@ import android.widget.Toast;
 
 import com.mk.security.R;
 import com.mk.security.engine.DownloadTask;
+import com.mk.security.engine.SmsService;
 import com.mk.security.service.AddressService;
+import com.mk.security.service.BackupSmsService;
 
 import java.io.File;
 
@@ -36,6 +39,8 @@ public class AToolActivity extends ActionBarActivity implements View.OnClickList
     private CheckBox cb_atool_state;
     private TextView tv_atool_select_bg;
     private TextView tv_atool_change_location;
+    private TextView tv_atool_sms_backup;
+    private TextView tv_atool_sms_restore;
     private Intent serviceIntent;
     private SharedPreferences sp;
 
@@ -98,6 +103,14 @@ public class AToolActivity extends ActionBarActivity implements View.OnClickList
         tv_atool_number_security = (TextView) findViewById(R.id.tv_atool_number_security);
         tv_atool_number_security.setOnClickListener(this);
 
+        //短信备份
+        tv_atool_sms_backup = (TextView) findViewById(R.id.tv_atool_sms_backup);
+        tv_atool_sms_backup.setOnClickListener(this);
+
+        //短信还原
+        tv_atool_sms_restore = (TextView) findViewById(R.id.tv_atool_sms_restore);
+        tv_atool_sms_restore.setOnClickListener(this);
+
     }
 
 
@@ -136,6 +149,13 @@ public class AToolActivity extends ActionBarActivity implements View.OnClickList
             case R.id.tv_atool_number_security://通讯卫士
                 Intent numberIntent = new Intent(this, NumberSecurityActivity.class);
                 startActivity(numberIntent);
+                break;
+            case R.id.tv_atool_sms_backup :
+                Intent backupIntent = new Intent(this, BackupSmsService.class);
+                startService(backupIntent);
+                break;
+            case R.id.tv_atool_sms_restore :
+                restore();
                 break;
             default :
                 break;
@@ -210,5 +230,32 @@ public class AToolActivity extends ActionBarActivity implements View.OnClickList
             }
         }
         return false;
+    }
+
+    private void restore(){
+        final ProgressDialog pd = new ProgressDialog(this);
+        pd.setTitle("还原短信");
+        pd.setMessage("正在还原短信...");
+        pd.setCancelable(false);
+        pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        pd.show();
+        final SmsService smsService = new SmsService(this);
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    smsService.restore(Environment.getExternalStorageDirectory() + "/security/backup/smsbackup.xml", pd);
+                    pd.dismiss();
+                    Looper.prepare();//创建一个Looper
+                    Toast.makeText(getApplicationContext(), "还原成功", Toast.LENGTH_SHORT).show();
+                    Looper.loop();//轮循一次Looper
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Looper.prepare();//创建一个Looper
+                    Toast.makeText(getApplicationContext(), "还原失败", Toast.LENGTH_SHORT).show();
+                    Looper.loop();//轮循一次Looper
+                }
+            }
+        }.start();
     }
 }

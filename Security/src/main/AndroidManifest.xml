@@ -108,6 +108,17 @@
             android:name="com.mk.security.ui.NumberSecurityActivity"
             android:label="@string/title_activity_number_security" >
         </activity>
+
+        <service
+            android:name="com.mk.security.service.BackupSmsService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
+
+        <activity
+            android:name="com.mk.security.ui.AppManagerActivity"
+            android:label="@string/title_activity_app_manager" >
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -125,11 +136,11 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
-
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.WRITE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
     <!-- 这个是用模拟器进行测试才需要用到的权限，表示是这个模拟的位置 -->
     <!-- <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"/> -->
 

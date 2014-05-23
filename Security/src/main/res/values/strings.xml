@@ -66,5 +66,12 @@
     <string name="commonNumber">常用电话</string>
     <string name="title_activity_drag_view">DragViewActivity</string>
     <string name="title_activity_number_security">NumberSecurityActivity</string>
+    <string name="app_manager">所有应用</string>
+    <string name="app_manager_load">正在加载中</string>
+    <string name="app_manager_delete">卸载</string>
+    <string name="app_manager_run">运行</string>
+    <string name="app_manager_share">分享</string>
+    <string name="lock">密码输入</string>
+    <string name="title_activity_app_manager">AppManagerActivity</string>
 
 </resources>

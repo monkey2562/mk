@@ -94,6 +94,8 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
             case 1 : //通讯卫士
                 break;
             case 2 : //软件管理
+                Intent app_manager_intent = new Intent(this, AppManagerActivity.class);
+                startActivity(app_manager_intent);
                 break;
             case 3 : //流量管理
                 break;
