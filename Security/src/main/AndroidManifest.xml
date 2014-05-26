@@ -19,44 +19,49 @@
         <activity
             android:name="com.mk.security.ui.MainActivity"
             android:label="@string/main"
-            android:theme="@android:style/Theme.NoTitleBar" >
-        </activity>
-
-        <receiver
-            android:name="com.mk.security.receiver.CallPhoneReceiver"
-            android:enabled="true"
-            android:exported="true" >
-            <intent-filter android:priority="1000" >
-
-                <!-- 把优先级设置高一些，以便第一个拿到广播 -->
-                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
-            </intent-filter>
-        </receiver>
-
+            android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.mk.security.ui.LostProtectedActivity"
-            android:label="@string/title_activity_lost_protected" >
-        </activity>
+            android:label="@string/title_activity_lost_protected" />
         <activity
             android:name="com.mk.security.ui.SetupGuide1Activity"
-            android:label="@string/setupGuide" >
-        </activity>
+            android:label="@string/setupGuide" />
         <activity
             android:name="com.mk.security.ui.SetupGuide2Activity"
-            android:label="@string/setupGuide" >
-        </activity>
+            android:label="@string/setupGuide" />
         <activity
             android:name="com.mk.security.ui.SetupGuide3Activity"
-            android:label="@string/setupGuide" >
-        </activity>
+            android:label="@string/setupGuide" />
         <activity
             android:name="com.mk.security.ui.SelectContactActivity"
-            android:label="@string/title_activity_select_contact" >
-        </activity>
+            android:label="@string/title_activity_select_contact" />
         <activity
             android:name="com.mk.security.ui.SetupGuide4Activity"
-            android:label="@string/title_activity_setup_guide4" >
-        </activity>
+            android:label="@string/title_activity_setup_guide4" />
+        <activity
+            android:name="com.mk.security.ui.AToolActivity"
+            android:label="@string/title_activity_atool" />
+        <activity
+            android:name="com.mk.security.ui.QueryNumberActivity"
+            android:label="@string/title_activity_query_number" />
+        <activity
+            android:name="com.mk.security.ui.DragViewActivity"
+            android:label="@string/title_activity_drag_view" />
+        <activity
+            android:name="com.mk.security.ui.NumberSecurityActivity"
+            android:label="@string/title_activity_number_security" />
+        <activity
+            android:name="com.mk.security.ui.AppManagerActivity"
+            android:label="@string/title_activity_app_manager" />
+        <activity
+            android:name="com.mk.security.ui.AppLockActivity"
+            android:label="@string/title_activity_app_lock" />
+        <activity
+            android:name="com.mk.security.ui.LockActivity"
+            android:label="@string/title_activity_lock" />
+        <activity
+            android:name="com.mk.security.ui.SettingActivity"
+            android:label="@string/title_activity_setting" />
 
         <receiver
             android:name="com.mk.security.receiver.BootCompleteReceiver"
@@ -84,40 +89,41 @@
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
         </receiver>
+        <receiver
+            android:name="com.mk.security.receiver.CallPhoneReceiver"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter android:priority="1000" >
 
-        <activity
-            android:name="com.mk.security.ui.AToolActivity"
-            android:label="@string/title_activity_atool" >
-        </activity>
-        <activity
-            android:name="com.mk.security.ui.QueryNumberActivity"
-            android:label="@string/title_activity_query_number" >
-        </activity>
+                <!-- 把优先级设置高一些，以便第一个拿到广播 -->
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+            </intent-filter>
+        </receiver>
 
         <service
             android:name="com.mk.security.service.AddressService"
             android:enabled="true"
-            android:exported="true" >
-        </service>
-
-        <activity
-            android:name="com.mk.security.ui.DragViewActivity"
-            android:label="@string/title_activity_drag_view" >
-        </activity>
-        <activity
-            android:name="com.mk.security.ui.NumberSecurityActivity"
-            android:label="@string/title_activity_number_security" >
-        </activity>
-
+            android:exported="true" />
         <service
             android:name="com.mk.security.service.BackupSmsService"
             android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name="com.mk.security.service.WatchDogService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <provider
+            android:name="com.mk.security.provider.AppLockProvider"
+            android:authorities="com.mk.security.applockprovider"
+            android:enabled="true"
             android:exported="true" >
-        </service>
+        </provider>
 
         <activity
-            android:name="com.mk.security.ui.AppManagerActivity"
-            android:label="@string/title_activity_app_manager" >
+            android:theme="@style/MyTitleBar"
+            android:name="com.mk.security.ui.ProcessManagerActivity"
+            android:label="@string/title_activity_process_manager" >
         </activity>
     </application>
 
@@ -141,6 +147,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.WRITE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
     <!-- 这个是用模拟器进行测试才需要用到的权限，表示是这个模拟的位置 -->
     <!-- <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"/> -->
 

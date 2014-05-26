@@ -48,4 +48,9 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:src">@android:drawable/btn_star_big_on</item>
     </style>
+
+    <style name="MyTitleBar" parent="@android:style/Theme">
+        <item name="android:windowTitleSize">40dip</item>
+        <item name="android:windowTitleBackgroundStyle">@drawable/title_background</item>
+    </style>
 </resources>

@@ -100,6 +100,8 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
             case 3 : //流量管理
                 break;
             case 4 : //任务管理
+                Intent progressManagerIntent = new Intent(this, ProcessManagerActivity.class);
+                startActivity(progressManagerIntent);
                 break;
             case 5 : //手机杀毒
                 break;
@@ -110,6 +112,8 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                 startActivity(atoolIntent);
                 break;
             case 8 : //设置中心
+                Intent settingIntent  = new Intent(this, SettingActivity.class);
+                startActivity(settingIntent);
                 break;
             default :
                 break;

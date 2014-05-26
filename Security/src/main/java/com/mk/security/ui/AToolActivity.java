@@ -41,6 +41,7 @@ public class AToolActivity extends ActionBarActivity implements View.OnClickList
     private TextView tv_atool_change_location;
     private TextView tv_atool_sms_backup;
     private TextView tv_atool_sms_restore;
+    private TextView tv_atool_app_lock;
     private Intent serviceIntent;
     private SharedPreferences sp;
 
@@ -111,6 +112,10 @@ public class AToolActivity extends ActionBarActivity implements View.OnClickList
         tv_atool_sms_restore = (TextView) findViewById(R.id.tv_atool_sms_restore);
         tv_atool_sms_restore.setOnClickListener(this);
 
+        //程序锁
+        tv_atool_app_lock = (TextView) findViewById(R.id.tv_atool_app_lock);
+        tv_atool_app_lock.setOnClickListener(this);
+
     }
 
 
@@ -156,6 +161,10 @@ public class AToolActivity extends ActionBarActivity implements View.OnClickList
                 break;
             case R.id.tv_atool_sms_restore :
                 restore();
+                break;
+            case R.id.tv_atool_app_lock :
+                Intent appLockIntent = new Intent(this, AppLockActivity.class);
+                startActivity(appLockIntent);
                 break;
             default :
                 break;
