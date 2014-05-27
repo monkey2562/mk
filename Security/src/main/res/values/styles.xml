@@ -53,4 +53,7 @@
         <item name="android:windowTitleSize">40dip</item>
         <item name="android:windowTitleBackgroundStyle">@drawable/title_background</item>
     </style>
+    <style name="NoTitleDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+    </style>
 </resources>

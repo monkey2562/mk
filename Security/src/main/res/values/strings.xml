@@ -86,4 +86,21 @@
     <string name="process_count">使用的内存</string>
     <string name="process_clear">一键清理</string>
     <string name="process_setting">进程设置</string>
+    <string name="security_desc">权限列表：</string>
+    <string name="title_activity_app_detial">AppDetialActivity</string>
+    <string name="title_activity_process_setting">ProcessSettingActivity</string>
+    <string name="show_setting">显示设置</string>
+    <string name="show_tips">不显示系统进程</string>
+    <string name="clean_setting">设置锁屏清理内存</string>
+    <string name="clean_tips">锁屏不清理内存</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="title_activity_common_number">CommonNumberActivity</string>
+    <string name="traffic_manager">流量管理</string>
+    <string name="traffic">00.00KB</string>
+    <string name="optimize">系统优化</string>
+    <string name="cache_clear">清理缓存</string>
+    <string name="dataSize">数据大小00.00KB</string>
+    <string name="title_activity_traffic_manager">TrafficManagerActivity</string>
+
 </resources>

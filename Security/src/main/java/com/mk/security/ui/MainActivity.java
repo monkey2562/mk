@@ -98,6 +98,8 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                 startActivity(app_manager_intent);
                 break;
             case 3 : //流量管理
+                Intent trafficIntent = new Intent(this, TrafficManagerActivity.class);
+                startActivity(trafficIntent);
                 break;
             case 4 : //任务管理
                 Intent progressManagerIntent = new Intent(this, ProcessManagerActivity.class);

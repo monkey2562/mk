@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Debug;
 
+import com.mk.security.R;
 import com.mk.security.domain.TaskInfo;
 
 import java.util.ArrayList;
@@ -18,10 +19,12 @@ import java.util.List;
 public class TaskInfoProvider {
     private PackageManager packageManager;
     private ActivityManager activityManager;
+    private Drawable defaultIcon;
 
     public TaskInfoProvider(Context context) {
         packageManager = context.getPackageManager();
         activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        defaultIcon = context.getResources().getDrawable(R.drawable.ic_launcher);
     }
 
 
@@ -61,6 +64,10 @@ public class TaskInfoProvider {
             catch (Exception e)
             {
                 e.printStackTrace();
+                //当遇到没有界面的和图标的一些进程时候的处理方式
+                taskInfo.setName(packageName);
+                taskInfo.setSystemProcess(true);
+                taskInfo.setIcon(defaultIcon);
             }
         }
         return taskInfos;

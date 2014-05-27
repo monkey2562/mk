@@ -42,6 +42,7 @@ public class AToolActivity extends ActionBarActivity implements View.OnClickList
     private TextView tv_atool_sms_backup;
     private TextView tv_atool_sms_restore;
     private TextView tv_atool_app_lock;
+    private TextView tv_atool_common_number;
     private Intent serviceIntent;
     private SharedPreferences sp;
 
@@ -80,6 +81,9 @@ public class AToolActivity extends ActionBarActivity implements View.OnClickList
 
         tv_atool_change_location = (TextView) findViewById(R.id.tv_atool_change_location);
         tv_atool_change_location.setOnClickListener(this);
+
+        tv_atool_common_number = (TextView) findViewById(R.id.tv_atool_common_number);
+        tv_atool_common_number.setOnClickListener(this);
 
         tv_atool_number_service_state = (TextView) findViewById(R.id.tv_atool_number_service_state);
         cb_atool_state = (CheckBox) findViewById(R.id.cb_atool_state);
@@ -165,6 +169,10 @@ public class AToolActivity extends ActionBarActivity implements View.OnClickList
             case R.id.tv_atool_app_lock :
                 Intent appLockIntent = new Intent(this, AppLockActivity.class);
                 startActivity(appLockIntent);
+                break;
+            case R.id.tv_atool_common_number :
+                Intent commonNumberIntent = new Intent(this, CommonNumberActivity.class);
+                startActivity(commonNumberIntent);
                 break;
             default :
                 break;
