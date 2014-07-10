@@ -1,4 +1,4 @@
-package com.mk.lottery.util;
+package com.mk.lottery.dao;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -7,12 +7,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Created by Administrator on 2014/7/10.
  */
-public class DatabaseHelper extends SQLiteOpenHelper{
+public class DBOpenHelper extends SQLiteOpenHelper{
 
     private static final String DB_NAME = "lottery.db"; //数据库名称
     private static final int version = 1; //数据库版本
 
-    public DatabaseHelper(Context context) {
+    public DBOpenHelper(Context context) {
         // 第一个参数是应用的上下文
         // 第二个参数是应用的数据库名字
         // 第三个参数CursorFactory指定在执行查询时获得一个游标实例的工厂类,设置为null,代表使用系统默认的工厂类
@@ -20,7 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         super(context, DB_NAME, null, version);
     }
 
-    public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    public DBOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
@@ -33,7 +33,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 " first_count INTEGER, first_amount INTEGER, second_count INTEGER, second_amount INTEGER, " +
                 " third_count INTEGER, third_amount INTEGER, fourth_count INTEGER, fourth_amount INTEGER," +
                 " fifth_count INTEGER, fifth_amount INTEGER, sixth_count INTEGER, sixth_amount INTEGER)");
-
     }
 
     @Override

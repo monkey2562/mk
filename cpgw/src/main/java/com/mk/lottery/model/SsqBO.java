@@ -1,4 +1,4 @@
-package com.mk.lottery.module;
+package com.mk.lottery.model;
 
 import java.sql.Timestamp;
 

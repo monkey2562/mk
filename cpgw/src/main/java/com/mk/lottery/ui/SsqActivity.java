@@ -1,7 +1,5 @@
 package com.mk.lottery.ui;
 
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
@@ -14,12 +12,10 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.mk.lottery.R;
-import com.mk.lottery.module.SsqBO;
-import com.mk.lottery.service.SsqService;
+import com.mk.lottery.dao.SsqDao;
+import com.mk.lottery.model.SsqBO;
 
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -274,11 +270,11 @@ public class SsqActivity extends ActionBarActivity implements View.OnClickListen
             default:
         }
 
-        SsqService ssqService = new SsqService(this);
+        SsqDao ssqDao = new SsqDao(this);
         SsqBO ssqBO = new SsqBO();
         ssqBO.setLotteryIssue(2014077);
         ssqBO.setLotteryDate(new Timestamp(System.currentTimeMillis()));
-        ssqService.save(ssqBO);
+        ssqDao.save(ssqBO);
         System.out.println("==========完毕");
 
 
