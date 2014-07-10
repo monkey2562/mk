@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">彩票顾问</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">设置</string>
+    <string name="main">彩票顾问</string>
+    <string name="title_activity_ssq">双色球</string>
+    <string name="title_activity_dlt">大乐透</string>
+
+</resources>

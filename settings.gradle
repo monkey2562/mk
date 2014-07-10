@@ -1,1 +1,1 @@
-include ':Security'
+include ':Security', ':cpgw'

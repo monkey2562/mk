@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Security/Security.iml" filepath="$PROJECT_DIR$/Security/Security.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cpgw/cpgw.iml" filepath="$PROJECT_DIR$/cpgw/cpgw.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mk.iml" filepath="$PROJECT_DIR$/mk.iml" />
     </modules>
   </component>
 </project>

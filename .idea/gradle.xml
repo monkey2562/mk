@@ -9,6 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/Security" />
+            <option value="$PROJECT_DIR$/cpgw" />
           </set>
         </option>
       </GradleProjectSettings>
