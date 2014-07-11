@@ -577,9 +577,25 @@
             />
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btn_ssq_init"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="初始化数据"/>
+        <Button
+            android:id="@+id/btn_ssq_import"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="导入数据库"/>
+    </LinearLayout>
     <ImageButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:src="@drawable/button_search"/>
+
+
 </LinearLayout>

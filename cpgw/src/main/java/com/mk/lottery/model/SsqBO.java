@@ -6,10 +6,12 @@ import java.sql.Timestamp;
  * Created by Administrator on 2014/7/10.
  */
 public class SsqBO {
+    /** id*/
+    private int id;
     /** 开奖期号*/
     private int lotteryIssue;
     /** 开奖日期*/
-    private Timestamp lotteryDate;
+    private String lotteryDate;
     /** 红号1*/
     private int red1;
     /** 红号2*/
@@ -65,6 +67,14 @@ public class SsqBO {
     /** 六等奖金额*/
     private int sixthAmount;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getLotteryIssue() {
         return lotteryIssue;
     }
@@ -73,11 +83,11 @@ public class SsqBO {
         this.lotteryIssue = lotteryIssue;
     }
 
-    public Timestamp getLotteryDate() {
+    public String getLotteryDate() {
         return lotteryDate;
     }
 
-    public void setLotteryDate(Timestamp lotteryDate) {
+    public void setLotteryDate(String lotteryDate) {
         this.lotteryDate = lotteryDate;
     }
 

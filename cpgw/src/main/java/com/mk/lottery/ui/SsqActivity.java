@@ -1,5 +1,7 @@
 package com.mk.lottery.ui;
 
+import android.app.Activity;
+import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
@@ -15,11 +17,12 @@ import com.mk.lottery.R;
 import com.mk.lottery.dao.SsqDao;
 import com.mk.lottery.model.SsqBO;
 
+import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SsqActivity extends ActionBarActivity implements View.OnClickListener{
+public class SsqActivity extends Activity implements View.OnClickListener{
     private Map<Integer,String> clickRedMap = new HashMap<Integer, String>();
     private Map<Integer,String> clickBlueMap = new HashMap<Integer, String>();
     @Override
@@ -178,6 +181,15 @@ public class SsqActivity extends ActionBarActivity implements View.OnClickListen
         btn_b_14.setOnClickListener(this);
         btn_b_15.setOnClickListener(this);
         btn_b_16.setOnClickListener(this);
+
+        Button btnInit = (Button) findViewById(R.id.btn_ssq_init);
+        btnInit.setOnClickListener(this);
+
+        Button btnImport = (Button) findViewById(R.id.btn_ssq_import);
+        btnImport.setOnClickListener(this);
+
+
+
     }
 
     @Override
@@ -267,15 +279,18 @@ public class SsqActivity extends ActionBarActivity implements View.OnClickListen
                     btnBlue.setTextColor(getResources().getColor(R.color.blueBall));
                 }
                 break;
+            case R.id.btn_ssq_init://初始化数据库
+                SsqDao ssqDao = new SsqDao(this);
+                ssqDao.initData();
+                break;
+            case R.id.btn_ssq_import://把raw里面的数据文件拷贝到databases文件夹下
+                SsqDao dao = new SsqDao(this);
+                dao.importDatabase();
+                break;
             default:
         }
 
-        SsqDao ssqDao = new SsqDao(this);
-        SsqBO ssqBO = new SsqBO();
-        ssqBO.setLotteryIssue(2014077);
-        ssqBO.setLotteryDate(new Timestamp(System.currentTimeMillis()));
-        ssqDao.save(ssqBO);
-        System.out.println("==========完毕");
+
 
 
     }

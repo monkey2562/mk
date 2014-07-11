@@ -1,5 +1,6 @@
 package com.mk.lottery.ui;
 
+import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,7 +8,7 @@ import android.view.MenuItem;
 
 import com.mk.lottery.R;
 
-public class DltActivity extends ActionBarActivity {
+public class DltActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
