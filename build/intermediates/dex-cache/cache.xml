@@ -2,16 +2,16 @@
 <pre-dex-items>
 
     <item
-        dex="D:\Workspaces\AndroidStudioProjects\mk\cpgw\build\intermediates\pre-dexed\debug\support-v4-19.1.0-3874ccb93ab6277970866e3b0e81ea88cd941a04.jar"
-        jar="D:\Program Files\adt-bundle-windows-x86_64-20131030\sdk\extras\android\m2repository\com\android\support\support-v4\19.1.0\support-v4-19.1.0.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
-    <item
-        dex="D:\Workspaces\AndroidStudioProjects\mk\cpgw\build\intermediates\pre-dexed\debug\classes-6ddde668090f5064cbe38df7d817c9097d6c0092.jar"
-        jar="D:\Workspaces\AndroidStudioProjects\mk\build\intermediates\exploded-aar\com.android.support\appcompat-v7\19.1.0\classes.jar"
+        dex="D:\workspace\AndroidStudioProjects\mk\cpgw\build\intermediates\pre-dexed\debug\classes-7ab99688db2b29393107a17df58e09aa7e609f21.jar"
+        jar="D:\workspace\AndroidStudioProjects\mk\build\intermediates\exploded-aar\com.android.support\appcompat-v7\19.1.0\classes.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
+    <item
+        dex="D:\workspace\AndroidStudioProjects\mk\cpgw\build\intermediates\pre-dexed\debug\support-v4-19.1.0-2c06d9f9aefa956ee39b7bbf4b2f4a1387cf5624.jar"
+        jar="D:\Program Files\adt-bundle-windows\sdk\extras\android\m2repository\com\android\support\support-v4\19.1.0\support-v4-19.1.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
 
 </pre-dex-items>

@@ -24,6 +24,10 @@
             android:name=".ui.DltActivity"
             android:label="@string/title_activity_dlt" >
         </activity>
+        <activity
+            android:name=".ui.SsqSearchActivity"
+            android:label="@string/title_activity_ssq_search" >
+        </activity>
     </application>
 
 </manifest>

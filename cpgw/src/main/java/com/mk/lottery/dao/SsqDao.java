@@ -59,21 +59,92 @@ public class SsqDao {
 
     public SsqBO find(int id) {
         db = helper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select id,lottery_issue from ssq ",null);
+        Cursor cursor = db.rawQuery("select id,lottery_issue,lottery_date,red_1,red_2,red_3,red_4,red_5,red_6," +
+                        "blue,reds_1,reds_2,reds_3,reds_4,reds_5,reds_6,total_amount,pool_amount," +
+                        "first_count,first_amount,second_count,second_amount,third_count,third_amount," +
+                        "fourth_count,fourth_amount,fifth_count,fifth_amount,sixth_count,sixth_amount from ssq where id = ? ",
+                new String[]{String.valueOf(id)});
         if (cursor.moveToNext()) {
             SsqBO bo = new SsqBO();
-            bo.setLotteryIssue(cursor.getInt(cursor.getColumnIndex("lottery_issue")));
+//            bo.setLotteryIssue(cursor.getInt(cursor.getColumnIndex("lottery_issue")));
+            bo.setId(cursor.getInt(0));
+            bo.setLotteryIssue(cursor.getInt(1));
+            bo.setLotteryDate(cursor.getString(2));
+            bo.setRed1(cursor.getInt(3));
+            bo.setRed2(cursor.getInt(4));
+            bo.setRed3(cursor.getInt(5));
+            bo.setRed4(cursor.getInt(6));
+            bo.setRed5(cursor.getInt(7));
+            bo.setRed6(cursor.getInt(8));
+            bo.setBlue(cursor.getInt(9));
+            bo.setReds1(cursor.getInt(10));
+            bo.setReds2(cursor.getInt(11));
+            bo.setReds3(cursor.getInt(12));
+            bo.setReds4(cursor.getInt(13));
+            bo.setReds5(cursor.getInt(14));
+            bo.setReds6(cursor.getInt(15));
+            bo.setTotalAmount(cursor.getInt(16));
+            bo.setPoolAmount(cursor.getInt(17));
+            bo.setFirstCount(cursor.getInt(18));
+            bo.setFirstAmount(cursor.getInt(19));
+            bo.setSecondCount(cursor.getInt(20));
+            bo.setSecondAmount(cursor.getInt(21));
+            bo.setThirdCount(cursor.getInt(22));
+            bo.setThirdAmount(cursor.getInt(23));
+            bo.setFourthCount(cursor.getInt(24));
+            bo.setFourthAmount(cursor.getInt(25));
+            bo.setFifthCount(cursor.getInt(26));
+            bo.setFifthAmount(cursor.getInt(27));
+            bo.setSixthCount(cursor.getInt(28));
+            bo.setSixthAmount(cursor.getInt(29));
             return bo;
         }
         return null;
     }
 
-    public List<SsqBO> getSsqList() {
+    public List<SsqBO> getSsqListByRedBall(int redBall) {
         List<SsqBO> ssqBOs = new ArrayList<SsqBO>();
         db = helper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select * from ssq ", null);
+        Cursor cursor = db.rawQuery("select id,lottery_issue,lottery_date,red_1,red_2,red_3,red_4,red_5,red_6," +
+                        "blue,reds_1,reds_2,reds_3,reds_4,reds_5,reds_6,total_amount,pool_amount," +
+                        "first_count,first_amount,second_count,second_amount,third_count,third_amount," +
+                        "fourth_count,fourth_amount,fifth_count,fifth_amount,sixth_count,sixth_amount " +
+                        "from ssq where red1=? or red2=? or red3=? or red4=? or red5=? or red5=?",
+                new String[]{String.valueOf(redBall),String.valueOf(redBall),String.valueOf(redBall),
+                        String.valueOf(redBall),String.valueOf(redBall),String.valueOf(redBall)});
         while (cursor.moveToNext()) {
-            ssqBOs.add(new SsqBO());
+            SsqBO bo =  new SsqBO();
+            bo.setId(cursor.getInt(0));
+            bo.setLotteryIssue(cursor.getInt(1));
+            bo.setLotteryDate(cursor.getString(2));
+            bo.setRed1(cursor.getInt(3));
+            bo.setRed2(cursor.getInt(4));
+            bo.setRed3(cursor.getInt(5));
+            bo.setRed4(cursor.getInt(6));
+            bo.setRed5(cursor.getInt(7));
+            bo.setRed6(cursor.getInt(8));
+            bo.setBlue(cursor.getInt(9));
+            bo.setReds1(cursor.getInt(10));
+            bo.setReds2(cursor.getInt(11));
+            bo.setReds3(cursor.getInt(12));
+            bo.setReds4(cursor.getInt(13));
+            bo.setReds5(cursor.getInt(14));
+            bo.setReds6(cursor.getInt(15));
+            bo.setTotalAmount(cursor.getInt(16));
+            bo.setPoolAmount(cursor.getInt(17));
+            bo.setFirstCount(cursor.getInt(18));
+            bo.setFirstAmount(cursor.getInt(19));
+            bo.setSecondCount(cursor.getInt(20));
+            bo.setSecondAmount(cursor.getInt(21));
+            bo.setThirdCount(cursor.getInt(22));
+            bo.setThirdAmount(cursor.getInt(23));
+            bo.setFourthCount(cursor.getInt(24));
+            bo.setFourthAmount(cursor.getInt(25));
+            bo.setFifthCount(cursor.getInt(26));
+            bo.setFifthAmount(cursor.getInt(27));
+            bo.setSixthCount(cursor.getInt(28));
+            bo.setSixthAmount(cursor.getInt(29));
+            ssqBOs.add(bo);
         }
         return ssqBOs;
     }

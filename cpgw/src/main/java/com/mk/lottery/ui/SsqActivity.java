@@ -1,25 +1,27 @@
 package com.mk.lottery.ui;
 
 import android.app.Activity;
-import android.content.res.AssetManager;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.mk.lottery.R;
 import com.mk.lottery.dao.SsqDao;
-import com.mk.lottery.model.SsqBO;
+import com.mk.lottery.model.SsqVO;
 
-import java.io.InputStream;
-import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SsqActivity extends Activity implements View.OnClickListener{
@@ -188,7 +190,8 @@ public class SsqActivity extends Activity implements View.OnClickListener{
         Button btnImport = (Button) findViewById(R.id.btn_ssq_import);
         btnImport.setOnClickListener(this);
 
-
+        ImageButton imageButton = (ImageButton) findViewById(R.id.btn_ssq_search);
+        imageButton.setOnClickListener(this);
 
     }
 
@@ -270,12 +273,12 @@ public class SsqActivity extends Activity implements View.OnClickListener{
                         Toast.makeText(SsqActivity.this,"只能选择1个蓝球。",Toast.LENGTH_SHORT).show();
                         break;
                     }
-                    clickBlueMap.put(btnBlue.getId(),btnBlue.getText().toString());
+                    clickBlueMap.put(0,btnBlue.getText().toString());
                     btnBlue.setBackgroundResource(R.drawable.ball_blue);
                     btnBlue.setTextColor(Color.WHITE);
                 }else{
                     btnBlue.setBackgroundResource(R.drawable.ball_gray);
-                    clickBlueMap.remove(btnBlue.getId());
+                    clickBlueMap.remove(0);
                     btnBlue.setTextColor(getResources().getColor(R.color.blueBall));
                 }
                 break;
@@ -286,6 +289,63 @@ public class SsqActivity extends Activity implements View.OnClickListener{
             case R.id.btn_ssq_import://把raw里面的数据文件拷贝到databases文件夹下
                 SsqDao dao = new SsqDao(this);
                 dao.importDatabase();
+                break;
+            case R.id.btn_ssq_search://查询按钮
+//            	SsqDao searchDao = new SsqDao(this);
+//            	searchDao.importDatabase();
+
+                //1.获取一组球，2.对MAP进行排序 3.带参数跳转
+                List<Map.Entry<Integer, String>> mappingList = null;
+                //通过ArrayList构造函数把map.entrySet()转换成list
+                mappingList = new ArrayList<Map.Entry<Integer,String>>(clickRedMap.entrySet());
+                //通过比较器实现比较排序
+                Collections.sort(mappingList, new Comparator<Map.Entry<Integer, String>>() {
+
+                    @Override
+                    public int compare(Map.Entry<Integer, String> mapping1,
+                                       Map.Entry<Integer, String> mapping2) {
+                        return mapping1.getValue().compareTo(mapping2.getValue());
+                    }
+
+                });
+                int i = 1;
+                SsqVO ssqVO = new SsqVO();
+                for(Map.Entry<Integer,String> mapping:mappingList){
+                    System.out.println(mapping.getKey()+":"+mapping.getValue());
+                    switch (i) {
+                        case 1:
+                            ssqVO.setFirst(mapping.getValue());
+                            i++;
+                            break;
+                        case 2:
+                            ssqVO.setSecond(mapping.getValue());
+                            i++;
+                            break;
+                        case 3:
+                            ssqVO.setThird(mapping.getValue());
+                            i++;
+                            break;
+                        case 4:
+                            ssqVO.setFourth(mapping.getValue());
+                            i++;
+                            break;
+                        case 5:
+                            ssqVO.setFifth(mapping.getValue());
+                            i++;
+                            break;
+                        case 6:
+                            ssqVO.setSixth(mapping.getValue());
+                            i++;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                ssqVO.setBlue(clickBlueMap.get(0));
+                Intent intent = new Intent(this,SsqSearchActivity.class);
+                intent.putExtra("ssqVO", ssqVO);
+                startActivity(intent);
+
                 break;
             default:
         }
