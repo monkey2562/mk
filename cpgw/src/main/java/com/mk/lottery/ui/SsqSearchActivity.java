@@ -3,6 +3,7 @@ package com.mk.lottery.ui;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
@@ -10,7 +11,15 @@ import android.widget.Button;
 
 import com.mk.lottery.R;
 import com.mk.lottery.dao.SsqDao;
+import com.mk.lottery.model.SsqBO;
 import com.mk.lottery.model.SsqVO;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class SsqSearchActivity extends ActionBarActivity {
 
@@ -28,16 +37,22 @@ public class SsqSearchActivity extends ActionBarActivity {
         Button btnRed5 = (Button) findViewById(R.id.btn_ssq_search_05);
         Button btnRed6 = (Button) findViewById(R.id.btn_ssq_search_06);
         Button btnRed7 = (Button) findViewById(R.id.btn_ssq_search_07);
-        btnRed1.setText(ssqVO.getFirst());
-        btnRed2.setText(ssqVO.getSecond());
-        btnRed3.setText(ssqVO.getThird());
-        btnRed4.setText(ssqVO.getFourth());
-        btnRed5.setText(ssqVO.getFifth());
-        btnRed6.setText(ssqVO.getSixth());
-        btnRed7.setText(ssqVO.getBlue());
+        String first = ssqVO.getFirst();
+        String second = ssqVO.getSecond();
+        String third = ssqVO.getThird();
+        String fourth = ssqVO.getFourth();
+        String fifth = ssqVO.getFifth();
+        String sixth = ssqVO.getSixth();
+        String blue = ssqVO.getBlue();
+        btnRed1.setText(first);
+        btnRed2.setText(second);
+        btnRed3.setText(third);
+        btnRed4.setText(fourth);
+        btnRed5.setText(fifth);
+        btnRed6.setText(sixth);
+        btnRed7.setText(blue);
 
-        
-        SsqDao ssqDao = new SsqDao(this);
+
     }
 
 

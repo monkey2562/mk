@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,18 +16,22 @@ import android.widget.Toast;
 
 import com.mk.lottery.R;
 import com.mk.lottery.dao.SsqDao;
+import com.mk.lottery.model.SsqBO;
 import com.mk.lottery.model.SsqVO;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class SsqActivity extends Activity implements View.OnClickListener{
-    private Map<Integer,String> clickRedMap = new HashMap<Integer, String>();
-    private Map<Integer,String> clickBlueMap = new HashMap<Integer, String>();
+    private Map<String,String> clickRedMap = new HashMap<String, String>();
+    private Map<String,String> clickBlueMap = new HashMap<String, String>();
+    private static final String TAG = "SsqActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -197,6 +202,8 @@ public class SsqActivity extends Activity implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
+        SsqDao ssqDao = new SsqDao(this);
+
         switch (view.getId()) {
             case R.id.btn_ssq_red_01:
             case R.id.btn_ssq_red_02:
@@ -233,18 +240,18 @@ public class SsqActivity extends Activity implements View.OnClickListener{
             case R.id.btn_ssq_red_33:
                 Button btnRed = (Button) view;
                 //检查MAP里面的值，该按钮的状态
-                if(clickRedMap.get(btnRed.getId()) == null){
+                if(clickRedMap.get(btnRed.getText().toString()) == null){
                     //判断只能按下六个红球
                     if(clickRedMap.size()>=6){
                         Toast.makeText(SsqActivity.this, "只能选择6个红球。", Toast.LENGTH_SHORT).show();
                         break;
                     }
-                    clickRedMap.put(btnRed.getId(), btnRed.getText().toString());
+                    clickRedMap.put(btnRed.getText().toString(), btnRed.getText().toString());
                     btnRed.setBackgroundResource(R.drawable.ball_red);
                     btnRed.setTextColor(Color.WHITE);
                 }else{
                     btnRed.setBackgroundResource(R.drawable.ball_gray);
-                    clickRedMap.remove(btnRed.getId());
+                    clickRedMap.remove(btnRed.getText().toString());
                     btnRed.setTextColor(getResources().getColor(R.color.redBall));
                 }
 
@@ -267,81 +274,244 @@ public class SsqActivity extends Activity implements View.OnClickListener{
             case R.id.btn_ssq_blue_16:
                 Button btnBlue = (Button) view;
                 //检查MAP里面的值，该按钮的状态
-                if(clickBlueMap.get(btnBlue.getId()) == null){
+                if(clickBlueMap.get(btnBlue.getText().toString()) == null){
                     //判断只能按下1个蓝球
                     if(clickBlueMap.size()>=1){
                         Toast.makeText(SsqActivity.this,"只能选择1个蓝球。",Toast.LENGTH_SHORT).show();
                         break;
                     }
-                    clickBlueMap.put(0,btnBlue.getText().toString());
+                    clickBlueMap.put(btnBlue.getText().toString(),btnBlue.getText().toString());
                     btnBlue.setBackgroundResource(R.drawable.ball_blue);
                     btnBlue.setTextColor(Color.WHITE);
                 }else{
                     btnBlue.setBackgroundResource(R.drawable.ball_gray);
-                    clickBlueMap.remove(0);
+                    clickBlueMap.remove(btnBlue.getText().toString());
                     btnBlue.setTextColor(getResources().getColor(R.color.blueBall));
                 }
                 break;
             case R.id.btn_ssq_init://初始化数据库
-                SsqDao ssqDao = new SsqDao(this);
                 ssqDao.initData();
                 break;
             case R.id.btn_ssq_import://把raw里面的数据文件拷贝到databases文件夹下
-                SsqDao dao = new SsqDao(this);
-                dao.importDatabase();
+                ssqDao.importDatabase();
+                Toast.makeText(SsqActivity.this,"数据库移动完成！！！",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_ssq_search://查询按钮
-//            	SsqDao searchDao = new SsqDao(this);
-//            	searchDao.importDatabase();
+                //判断是否有6个红球和1个蓝球
+//                if(clickRedMap.size() < 6 ){
+//                    Toast.makeText(SsqActivity.this,"必须选择6个红球！",Toast.LENGTH_SHORT).show();
+//                    break;
+//                }
+//                if(clickBlueMap.size() < 1 ){
+//                    Toast.makeText(SsqActivity.this,"必须选择1个蓝球！",Toast.LENGTH_SHORT).show();
+//                    break;
+//                }
 
                 //1.获取一组球，2.对MAP进行排序 3.带参数跳转
-                List<Map.Entry<Integer, String>> mappingList = null;
+                List<Map.Entry<String, String>> mappingList = null;
                 //通过ArrayList构造函数把map.entrySet()转换成list
-                mappingList = new ArrayList<Map.Entry<Integer,String>>(clickRedMap.entrySet());
+                mappingList = new ArrayList<Map.Entry<String,String>>(clickRedMap.entrySet());
                 //通过比较器实现比较排序
-                Collections.sort(mappingList, new Comparator<Map.Entry<Integer, String>>() {
+                Collections.sort(mappingList, new Comparator<Map.Entry<String, String>>() {
 
                     @Override
-                    public int compare(Map.Entry<Integer, String> mapping1,
-                                       Map.Entry<Integer, String> mapping2) {
+                    public int compare(Map.Entry<String, String> mapping1,
+                                       Map.Entry<String, String> mapping2) {
                         return mapping1.getValue().compareTo(mapping2.getValue());
                     }
 
                 });
-                int i = 1;
+                int temp = 1;
                 SsqVO ssqVO = new SsqVO();
-                for(Map.Entry<Integer,String> mapping:mappingList){
+                for(Map.Entry<String,String> mapping:mappingList){
                     System.out.println(mapping.getKey()+":"+mapping.getValue());
-                    switch (i) {
+                    switch (temp) {
                         case 1:
                             ssqVO.setFirst(mapping.getValue());
-                            i++;
+                            temp++;
                             break;
                         case 2:
                             ssqVO.setSecond(mapping.getValue());
-                            i++;
+                            temp++;
                             break;
                         case 3:
                             ssqVO.setThird(mapping.getValue());
-                            i++;
+                            temp++;
                             break;
                         case 4:
                             ssqVO.setFourth(mapping.getValue());
-                            i++;
+                            temp++;
                             break;
                         case 5:
                             ssqVO.setFifth(mapping.getValue());
-                            i++;
+                            temp++;
                             break;
                         case 6:
                             ssqVO.setSixth(mapping.getValue());
-                            i++;
+                            temp++;
                             break;
                         default:
                             break;
                     }
                 }
-                ssqVO.setBlue(clickBlueMap.get(0));
+                Set<Map.Entry<String, String>>  set  = clickBlueMap.entrySet();
+                for (Iterator<Map.Entry<String, String>> it = set.iterator(); it.hasNext();) {
+                    Map.Entry<String, String> entry = (Map.Entry<String, String>) it.next();
+                    ssqVO.setBlue(entry.getValue());
+                }
+
+                String first = ssqVO.getFirst();
+                String second = ssqVO.getSecond();
+                String third = ssqVO.getThird();
+                String fourth = ssqVO.getFourth();
+                String fifth = ssqVO.getFifth();
+                String sixth = ssqVO.getSixth();
+                String blue = ssqVO.getBlue();
+
+                //第一个数字
+                Map<Integer, Integer> lotteryIssueMap = new HashMap<Integer, Integer>();
+                List<SsqBO> firstBOs = ssqDao.getSsqListByRedBall(Integer.valueOf(first));
+                Log.v(TAG, "第一个数字: " + first + "  开奖期数 = " + firstBOs.size());
+                for (int i = 0; i < firstBOs.size(); i++) {
+                    SsqBO firstBO =  firstBOs.get(i);
+                    lotteryIssueMap.put(firstBO.getLotteryIssue(), 1);
+                }
+
+                //第二个数字
+                List<SsqBO> secondBOs = ssqDao.getSsqListByRedBall(Integer.valueOf(second));
+                Log.v(TAG,"第二个数字: "+second +"  开奖期数 = " + secondBOs.size());
+                for (int i = 0; i < secondBOs.size(); i++) {
+                    SsqBO ssqBO =  secondBOs.get(i);
+                    //判断期号有相同的再MAP VALUE上面加上1
+                    Set<Map.Entry<Integer, Integer>> issueSet = lotteryIssueMap.entrySet();
+                    int count = 0;//用于判断是否这一期在这个MAP里面已经有值。
+                    for (Iterator<Map.Entry<Integer, Integer>> it = issueSet.iterator(); it.hasNext();) {
+                        Map.Entry<Integer, Integer> entry = (Map.Entry<Integer, Integer>) it.next();
+                        if(entry.getKey() == ssqBO.getLotteryIssue()){
+                            count++;
+                        }
+                    }
+                    if (count > 0) {
+                        //给相应的MAP值加1
+                        lotteryIssueMap.put(ssqBO.getLotteryIssue(),lotteryIssueMap.get(ssqBO.getLotteryIssue()).intValue()+1);
+                    }else {
+                        lotteryIssueMap.put(ssqBO.getLotteryIssue(), 1);
+                    }
+                }
+
+                //第三个数字
+                List<SsqBO> thirdBOs = ssqDao.getSsqListByRedBall(Integer.valueOf(third));
+                Log.v(TAG, "第三个数字: " + third + "  开奖期数 = " + thirdBOs.size());
+                for (int i = 0; i < thirdBOs.size(); i++) {
+                    SsqBO ssqBO =  thirdBOs.get(i);
+                    //判断期号有相同的再MAP VALUE上面加上1
+                    Set<Map.Entry<Integer, Integer>> issueSet = lotteryIssueMap.entrySet();
+                    int count = 0;//用于判断是否这一期在这个MAP里面已经有值。
+                    for (Iterator<Map.Entry<Integer, Integer>> it = issueSet.iterator(); it.hasNext();) {
+                        Map.Entry<Integer, Integer> entry = (Map.Entry<Integer, Integer>) it.next();
+                        if(entry.getKey() == ssqBO.getLotteryIssue()){
+                            count++;
+                        }
+                    }
+                    if (count > 0) {
+                        //给相应的MAP值加1
+                        lotteryIssueMap.put(ssqBO.getLotteryIssue(),lotteryIssueMap.get(ssqBO.getLotteryIssue()).intValue()+1);
+                    }else {
+                        lotteryIssueMap.put(ssqBO.getLotteryIssue(), 1);
+                    }
+                }
+
+                //第四个数字
+                List<SsqBO> fourthBOs = ssqDao.getSsqListByRedBall(Integer.valueOf(fourth));
+                Log.v(TAG, "第四个数字: " + fourth + "  开奖期数 = " + fourthBOs.size());
+                for (int i = 0; i < fourthBOs.size(); i++) {
+                    SsqBO ssqBO =  fourthBOs.get(i);
+                    //判断期号有相同的再MAP VALUE上面加上1
+                    Set<Map.Entry<Integer, Integer>> issueSet = lotteryIssueMap.entrySet();
+                    int count = 0;//用于判断是否这一期在这个MAP里面已经有值。
+                    for (Iterator<Map.Entry<Integer, Integer>> it = issueSet.iterator(); it.hasNext();) {
+                        Map.Entry<Integer, Integer> entry = (Map.Entry<Integer, Integer>) it.next();
+                        if(entry.getKey() == ssqBO.getLotteryIssue()){
+                            count++;
+                        }
+                    }
+                    if (count > 0) {
+                        //给相应的MAP值加1
+                        lotteryIssueMap.put(ssqBO.getLotteryIssue(),lotteryIssueMap.get(ssqBO.getLotteryIssue()).intValue()+1);
+                    }else {
+                        lotteryIssueMap.put(ssqBO.getLotteryIssue(), 1);
+                    }
+                }
+
+                //第五个数字
+                List<SsqBO> fifthBOs = ssqDao.getSsqListByRedBall(Integer.valueOf(fifth));
+                Log.v(TAG, "第五个数字: " + fifth + "  开奖期数 = " + fifthBOs.size());
+                for (int i = 0; i < fifthBOs.size(); i++) {
+                    SsqBO ssqBO =  fifthBOs.get(i);
+                    //判断期号有相同的再MAP VALUE上面加上1
+                    Set<Map.Entry<Integer, Integer>> issueSet = lotteryIssueMap.entrySet();
+                    int count = 0;//用于判断是否这一期在这个MAP里面已经有值。
+                    for (Iterator<Map.Entry<Integer, Integer>> it = issueSet.iterator(); it.hasNext();) {
+                        Map.Entry<Integer, Integer> entry = (Map.Entry<Integer, Integer>) it.next();
+                        if(entry.getKey() == ssqBO.getLotteryIssue()){
+                            count++;
+                        }
+                    }
+                    if (count > 0) {
+                        //给相应的MAP值加1
+                        lotteryIssueMap.put(ssqBO.getLotteryIssue(),lotteryIssueMap.get(ssqBO.getLotteryIssue()).intValue()+1);
+                    }else {
+                        lotteryIssueMap.put(ssqBO.getLotteryIssue(), 1);
+                    }
+                }
+
+
+                //第六个数字
+                List<SsqBO> sixthBOs = ssqDao.getSsqListByRedBall(Integer.valueOf(sixth));
+                Log.v(TAG, "第六个数字: " + sixth + "  开奖期数 = " + sixthBOs.size());
+                for (int i = 0; i < sixthBOs.size(); i++) {
+                    SsqBO ssqBO =  sixthBOs.get(i);
+                    //判断期号有相同的再MAP VALUE上面加上1
+                    Set<Map.Entry<Integer, Integer>> issueSet = lotteryIssueMap.entrySet();
+                    int count = 0;//用于判断是否这一期在这个MAP里面已经有值。
+                    for (Iterator<Map.Entry<Integer, Integer>> it = issueSet.iterator(); it.hasNext();) {
+                        Map.Entry<Integer, Integer> entry = (Map.Entry<Integer, Integer>) it.next();
+                        if(entry.getKey() == ssqBO.getLotteryIssue()){
+                            count++;
+                        }
+                    }
+                    if (count > 0) {
+                        //给相应的MAP值加1
+                        lotteryIssueMap.put(ssqBO.getLotteryIssue(),lotteryIssueMap.get(ssqBO.getLotteryIssue()).intValue()+1);
+                    }else {
+                        lotteryIssueMap.put(ssqBO.getLotteryIssue(), 1);
+                    }
+                }
+
+
+                //蓝球
+                Map<Integer, Integer> blueMap = new HashMap<Integer, Integer>();
+                List<SsqBO> blueBOs = ssqDao.getSsqListByBlueBall(Integer.valueOf(blue));
+                Log.v(TAG, "蓝色号码: " + blue + "  开奖期数 = " + blueBOs.size());
+                for (int i = 0; i < blueBOs.size(); i++) {
+                    SsqBO firstBO =  blueBOs.get(i);
+                    blueMap.put(firstBO.getLotteryIssue(), 1);
+                }
+
+
+
+
+                Set<Integer> key = lotteryIssueMap.keySet();
+                for(Iterator it = key.iterator();it.hasNext();){
+                    Integer s = (Integer) it.next();
+                    Integer value = lotteryIssueMap.get(s);
+                    if( value > 3){
+                        Log.v(TAG,"期号："+ s + " 次数：" + value );
+                    }
+                }
+
+
+
                 Intent intent = new Intent(this,SsqSearchActivity.class);
                 intent.putExtra("ssqVO", ssqVO);
                 startActivity(intent);
