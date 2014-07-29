@@ -13,31 +13,31 @@ public class SsqBO {
     /** 开奖日期*/
     private String lotteryDate;
     /** 红号1*/
-    private int red1;
+    private String red1;
     /** 红号2*/
-    private int red2;
+    private String red2;
     /** 红号3*/
-    private int red3;
+    private String red3;
     /** 红号4*/
-    private int red4;
+    private String red4;
     /** 红号5*/
-    private int red5;
+    private String red5;
     /** 红号6*/
-    private int red6;
+    private String red6;
     /** 蓝号*/
-    private int blue;
+    private String blue;
     /** 红号顺序1*/
-    private int reds1;
+    private String reds1;
     /** 红号顺序2*/
-    private int reds2;
+    private String reds2;
     /** 红号顺序3*/
-    private int reds3;
+    private String reds3;
     /** 红号顺序4*/
-    private int reds4;
+    private String reds4;
     /** 红号顺序5*/
-    private int reds5;
+    private String reds5;
     /** 红号顺序6*/
-    private int reds6;
+    private String reds6;
     /** 投注总额*/
     private int totalAmount;
     /** 奖池金额*/
@@ -91,107 +91,107 @@ public class SsqBO {
         this.lotteryDate = lotteryDate;
     }
 
-    public int getRed1() {
+    public String getRed1() {
         return red1;
     }
 
-    public void setRed1(int red1) {
+    public void setRed1(String red1) {
         this.red1 = red1;
     }
 
-    public int getRed2() {
+    public String getRed2() {
         return red2;
     }
 
-    public void setRed2(int red2) {
+    public void setRed2(String red2) {
         this.red2 = red2;
     }
 
-    public int getRed3() {
+    public String getRed3() {
         return red3;
     }
 
-    public void setRed3(int red3) {
+    public void setRed3(String red3) {
         this.red3 = red3;
     }
 
-    public int getRed4() {
+    public String getRed4() {
         return red4;
     }
 
-    public void setRed4(int red4) {
+    public void setRed4(String red4) {
         this.red4 = red4;
     }
 
-    public int getRed5() {
+    public String getRed5() {
         return red5;
     }
 
-    public void setRed5(int red5) {
+    public void setRed5(String red5) {
         this.red5 = red5;
     }
 
-    public int getRed6() {
+    public String getRed6() {
         return red6;
     }
 
-    public void setRed6(int red6) {
+    public void setRed6(String red6) {
         this.red6 = red6;
     }
 
-    public int getBlue() {
+    public String getBlue() {
         return blue;
     }
 
-    public void setBlue(int blue) {
+    public void setBlue(String blue) {
         this.blue = blue;
     }
 
-    public int getReds1() {
+    public String getReds1() {
         return reds1;
     }
 
-    public void setReds1(int reds1) {
+    public void setReds1(String reds1) {
         this.reds1 = reds1;
     }
 
-    public int getReds2() {
+    public String getReds2() {
         return reds2;
     }
 
-    public void setReds2(int reds2) {
+    public void setReds2(String reds2) {
         this.reds2 = reds2;
     }
 
-    public int getReds3() {
+    public String getReds3() {
         return reds3;
     }
 
-    public void setReds3(int reds3) {
+    public void setReds3(String reds3) {
         this.reds3 = reds3;
     }
 
-    public int getReds4() {
+    public String getReds4() {
         return reds4;
     }
 
-    public void setReds4(int reds4) {
+    public void setReds4(String reds4) {
         this.reds4 = reds4;
     }
 
-    public int getReds5() {
+    public String getReds5() {
         return reds5;
     }
 
-    public void setReds5(int reds5) {
+    public void setReds5(String reds5) {
         this.reds5 = reds5;
     }
 
-    public int getReds6() {
+    public String getReds6() {
         return reds6;
     }
 
-    public void setReds6(int reds6) {
+    public void setReds6(String reds6) {
         this.reds6 = reds6;
     }
 

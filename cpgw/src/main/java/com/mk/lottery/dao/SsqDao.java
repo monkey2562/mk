@@ -57,6 +57,11 @@ public class SsqDao {
         db.execSQL("update ssq set lottery_issue = ?", new Object[]{ssqBO.getLotteryIssue()});
     }
 
+    /**
+     * 通过ID查找
+     * @param id
+     * @return
+     */
     public SsqBO find(int id) {
         db = helper.getWritableDatabase();
         Cursor cursor = db.rawQuery("select id,lottery_issue,lottery_date,red_1,red_2,red_3,red_4,red_5,red_6," +
@@ -70,19 +75,69 @@ public class SsqDao {
             bo.setId(cursor.getInt(0));
             bo.setLotteryIssue(cursor.getInt(1));
             bo.setLotteryDate(cursor.getString(2));
-            bo.setRed1(cursor.getInt(3));
-            bo.setRed2(cursor.getInt(4));
-            bo.setRed3(cursor.getInt(5));
-            bo.setRed4(cursor.getInt(6));
-            bo.setRed5(cursor.getInt(7));
-            bo.setRed6(cursor.getInt(8));
-            bo.setBlue(cursor.getInt(9));
-            bo.setReds1(cursor.getInt(10));
-            bo.setReds2(cursor.getInt(11));
-            bo.setReds3(cursor.getInt(12));
-            bo.setReds4(cursor.getInt(13));
-            bo.setReds5(cursor.getInt(14));
-            bo.setReds6(cursor.getInt(15));
+            bo.setRed1(cursor.getString(3));
+            bo.setRed2(cursor.getString(4));
+            bo.setRed3(cursor.getString(5));
+            bo.setRed4(cursor.getString(6));
+            bo.setRed5(cursor.getString(7));
+            bo.setRed6(cursor.getString(8));
+            bo.setBlue(cursor.getString(9));
+            bo.setReds1(cursor.getString(10));
+            bo.setReds2(cursor.getString(11));
+            bo.setReds3(cursor.getString(12));
+            bo.setReds4(cursor.getString(13));
+            bo.setReds5(cursor.getString(14));
+            bo.setReds6(cursor.getString(15));
+            bo.setTotalAmount(cursor.getInt(16));
+            bo.setPoolAmount(cursor.getInt(17));
+            bo.setFirstCount(cursor.getInt(18));
+            bo.setFirstAmount(cursor.getInt(19));
+            bo.setSecondCount(cursor.getInt(20));
+            bo.setSecondAmount(cursor.getInt(21));
+            bo.setThirdCount(cursor.getInt(22));
+            bo.setThirdAmount(cursor.getInt(23));
+            bo.setFourthCount(cursor.getInt(24));
+            bo.setFourthAmount(cursor.getInt(25));
+            bo.setFifthCount(cursor.getInt(26));
+            bo.setFifthAmount(cursor.getInt(27));
+            bo.setSixthCount(cursor.getInt(28));
+            bo.setSixthAmount(cursor.getInt(29));
+            return bo;
+        }
+        return null;
+    }
+
+    /**
+     * 通过期号查找
+     * @param lotteryIssue 期号
+     * @return
+     */
+    public SsqBO findByLotteryIssue(int lotteryIssue) {
+        db = helper.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select id,lottery_issue,lottery_date,red_1,red_2,red_3,red_4,red_5,red_6," +
+                        "blue,reds_1,reds_2,reds_3,reds_4,reds_5,reds_6,total_amount,pool_amount," +
+                        "first_count,first_amount,second_count,second_amount,third_count,third_amount," +
+                        "fourth_count,fourth_amount,fifth_count,fifth_amount,sixth_count,sixth_amount from ssq where lottery_issue = ? ",
+                new String[]{String.valueOf(lotteryIssue)});
+        if (cursor.moveToNext()) {
+            SsqBO bo = new SsqBO();
+//            bo.setLotteryIssue(cursor.getInt(cursor.getColumnIndex("lottery_issue")));
+            bo.setId(cursor.getInt(0));
+            bo.setLotteryIssue(cursor.getInt(1));
+            bo.setLotteryDate(cursor.getString(2));
+            bo.setRed1(cursor.getString(3));
+            bo.setRed2(cursor.getString(4));
+            bo.setRed3(cursor.getString(5));
+            bo.setRed4(cursor.getString(6));
+            bo.setRed5(cursor.getString(7));
+            bo.setRed6(cursor.getString(8));
+            bo.setBlue(cursor.getString(9));
+            bo.setReds1(cursor.getString(10));
+            bo.setReds2(cursor.getString(11));
+            bo.setReds3(cursor.getString(12));
+            bo.setReds4(cursor.getString(13));
+            bo.setReds5(cursor.getString(14));
+            bo.setReds6(cursor.getString(15));
             bo.setTotalAmount(cursor.getInt(16));
             bo.setPoolAmount(cursor.getInt(17));
             bo.setFirstCount(cursor.getInt(18));
@@ -107,7 +162,7 @@ public class SsqDao {
      * @param redBall 红球号码
      * @return
      */
-    public List<SsqBO> getSsqListByRedBall(int redBall) {
+    public List<SsqBO> getSsqListByRedBall(String redBall) {
         List<SsqBO> ssqBOs = new ArrayList<SsqBO>();
         db = helper.getWritableDatabase();
         Cursor cursor = db.rawQuery("select id,lottery_issue,lottery_date,red_1,red_2,red_3,red_4,red_5,red_6," +
@@ -115,26 +170,25 @@ public class SsqDao {
                         "first_count,first_amount,second_count,second_amount,third_count,third_amount," +
                         "fourth_count,fourth_amount,fifth_count,fifth_amount,sixth_count,sixth_amount " +
                         "from ssq where red_1=? or red_2=? or red_3=? or red_4=? or red_5=? or red_6=?",
-                new String[]{String.valueOf(redBall),String.valueOf(redBall),String.valueOf(redBall),
-                        String.valueOf(redBall),String.valueOf(redBall),String.valueOf(redBall)});
+                new String[]{redBall,redBall,redBall,redBall,redBall,redBall});
         while (cursor.moveToNext()) {
             SsqBO bo =  new SsqBO();
             bo.setId(cursor.getInt(0));
             bo.setLotteryIssue(cursor.getInt(1));
             bo.setLotteryDate(cursor.getString(2));
-            bo.setRed1(cursor.getInt(3));
-            bo.setRed2(cursor.getInt(4));
-            bo.setRed3(cursor.getInt(5));
-            bo.setRed4(cursor.getInt(6));
-            bo.setRed5(cursor.getInt(7));
-            bo.setRed6(cursor.getInt(8));
-            bo.setBlue(cursor.getInt(9));
-            bo.setReds1(cursor.getInt(10));
-            bo.setReds2(cursor.getInt(11));
-            bo.setReds3(cursor.getInt(12));
-            bo.setReds4(cursor.getInt(13));
-            bo.setReds5(cursor.getInt(14));
-            bo.setReds6(cursor.getInt(15));
+            bo.setRed1(cursor.getString(3));
+            bo.setRed2(cursor.getString(4));
+            bo.setRed3(cursor.getString(5));
+            bo.setRed4(cursor.getString(6));
+            bo.setRed5(cursor.getString(7));
+            bo.setRed6(cursor.getString(8));
+            bo.setBlue(cursor.getString(9));
+            bo.setReds1(cursor.getString(10));
+            bo.setReds2(cursor.getString(11));
+            bo.setReds3(cursor.getString(12));
+            bo.setReds4(cursor.getString(13));
+            bo.setReds5(cursor.getString(14));
+            bo.setReds6(cursor.getString(15));
             bo.setTotalAmount(cursor.getInt(16));
             bo.setPoolAmount(cursor.getInt(17));
             bo.setFirstCount(cursor.getInt(18));
@@ -159,7 +213,7 @@ public class SsqDao {
      * @param blueBall 蓝球号码
      * @return
      */
-    public List<SsqBO> getSsqListByBlueBall(int blueBall) {
+    public List<SsqBO> getSsqListByBlueBall(String blueBall) {
         List<SsqBO> ssqBOs = new ArrayList<SsqBO>();
         db = helper.getWritableDatabase();
         Cursor cursor = db.rawQuery("select id,lottery_issue,lottery_date,red_1,red_2,red_3,red_4,red_5,red_6," +
@@ -167,25 +221,25 @@ public class SsqDao {
                         "first_count,first_amount,second_count,second_amount,third_count,third_amount," +
                         "fourth_count,fourth_amount,fifth_count,fifth_amount,sixth_count,sixth_amount " +
                         "from ssq where blue=? ",
-                new String[]{String.valueOf(blueBall)});
+                new String[]{blueBall});
         while (cursor.moveToNext()) {
             SsqBO bo =  new SsqBO();
             bo.setId(cursor.getInt(0));
             bo.setLotteryIssue(cursor.getInt(1));
             bo.setLotteryDate(cursor.getString(2));
-            bo.setRed1(cursor.getInt(3));
-            bo.setRed2(cursor.getInt(4));
-            bo.setRed3(cursor.getInt(5));
-            bo.setRed4(cursor.getInt(6));
-            bo.setRed5(cursor.getInt(7));
-            bo.setRed6(cursor.getInt(8));
-            bo.setBlue(cursor.getInt(9));
-            bo.setReds1(cursor.getInt(10));
-            bo.setReds2(cursor.getInt(11));
-            bo.setReds3(cursor.getInt(12));
-            bo.setReds4(cursor.getInt(13));
-            bo.setReds5(cursor.getInt(14));
-            bo.setReds6(cursor.getInt(15));
+            bo.setRed1(cursor.getString(3));
+            bo.setRed2(cursor.getString(4));
+            bo.setRed3(cursor.getString(5));
+            bo.setRed4(cursor.getString(6));
+            bo.setRed5(cursor.getString(7));
+            bo.setRed6(cursor.getString(8));
+            bo.setBlue(cursor.getString(9));
+            bo.setReds1(cursor.getString(10));
+            bo.setReds2(cursor.getString(11));
+            bo.setReds3(cursor.getString(12));
+            bo.setReds4(cursor.getString(13));
+            bo.setReds5(cursor.getString(14));
+            bo.setReds6(cursor.getString(15));
             bo.setTotalAmount(cursor.getInt(16));
             bo.setPoolAmount(cursor.getInt(17));
             bo.setFirstCount(cursor.getInt(18));
@@ -223,19 +277,19 @@ public class SsqDao {
                     SsqBO bo = new SsqBO();
                     bo.setLotteryIssue(Integer.valueOf(strs[0]));
                     bo.setLotteryDate(strs[1]);
-                    bo.setRed1(Integer.valueOf(strs[2]));
-                    bo.setRed2(Integer.valueOf(strs[3]));
-                    bo.setRed3(Integer.valueOf(strs[4]));
-                    bo.setRed4(Integer.valueOf(strs[5]));
-                    bo.setRed5(Integer.valueOf(strs[6]));
-                    bo.setRed6(Integer.valueOf(strs[7]));
-                    bo.setBlue(Integer.valueOf(strs[8]));
-                    bo.setReds1(Integer.valueOf(strs[9]));
-                    bo.setReds2(Integer.valueOf(strs[10]));
-                    bo.setReds3(Integer.valueOf(strs[11]));
-                    bo.setReds4(Integer.valueOf(strs[12]));
-                    bo.setReds5(Integer.valueOf(strs[13]));
-                    bo.setReds6(Integer.valueOf(strs[14]));
+                    bo.setRed1(strs[2]);
+                    bo.setRed2(strs[3]);
+                    bo.setRed3(strs[4]);
+                    bo.setRed4(strs[5]);
+                    bo.setRed5(strs[6]);
+                    bo.setRed6(strs[7]);
+                    bo.setBlue(strs[8]);
+                    bo.setReds1(strs[9]);
+                    bo.setReds2(strs[10]);
+                    bo.setReds3(strs[11]);
+                    bo.setReds4(strs[12]);
+                    bo.setReds5(strs[13]);
+                    bo.setReds6(strs[14]);
                     bo.setTotalAmount(Integer.valueOf(strs[15]));
                     bo.setPoolAmount(Integer.valueOf(strs[16]));
                     bo.setFirstCount(Integer.valueOf(strs[17]));

@@ -370,7 +370,7 @@ public class SsqActivity extends Activity implements View.OnClickListener{
 
                 //第一个数字
                 Map<Integer, Integer> lotteryIssueMap = new HashMap<Integer, Integer>();
-                List<SsqBO> firstBOs = ssqDao.getSsqListByRedBall(Integer.valueOf(first));
+                List<SsqBO> firstBOs = ssqDao.getSsqListByRedBall(first);
                 Log.v(TAG, "第一个数字: " + first + "  开奖期数 = " + firstBOs.size());
                 for (int i = 0; i < firstBOs.size(); i++) {
                     SsqBO firstBO =  firstBOs.get(i);
@@ -378,7 +378,7 @@ public class SsqActivity extends Activity implements View.OnClickListener{
                 }
 
                 //第二个数字
-                List<SsqBO> secondBOs = ssqDao.getSsqListByRedBall(Integer.valueOf(second));
+                List<SsqBO> secondBOs = ssqDao.getSsqListByRedBall(second);
                 Log.v(TAG,"第二个数字: "+second +"  开奖期数 = " + secondBOs.size());
                 for (int i = 0; i < secondBOs.size(); i++) {
                     SsqBO ssqBO =  secondBOs.get(i);
@@ -400,7 +400,7 @@ public class SsqActivity extends Activity implements View.OnClickListener{
                 }
 
                 //第三个数字
-                List<SsqBO> thirdBOs = ssqDao.getSsqListByRedBall(Integer.valueOf(third));
+                List<SsqBO> thirdBOs = ssqDao.getSsqListByRedBall(third);
                 Log.v(TAG, "第三个数字: " + third + "  开奖期数 = " + thirdBOs.size());
                 for (int i = 0; i < thirdBOs.size(); i++) {
                     SsqBO ssqBO =  thirdBOs.get(i);
@@ -422,7 +422,7 @@ public class SsqActivity extends Activity implements View.OnClickListener{
                 }
 
                 //第四个数字
-                List<SsqBO> fourthBOs = ssqDao.getSsqListByRedBall(Integer.valueOf(fourth));
+                List<SsqBO> fourthBOs = ssqDao.getSsqListByRedBall(fourth);
                 Log.v(TAG, "第四个数字: " + fourth + "  开奖期数 = " + fourthBOs.size());
                 for (int i = 0; i < fourthBOs.size(); i++) {
                     SsqBO ssqBO =  fourthBOs.get(i);
@@ -444,7 +444,7 @@ public class SsqActivity extends Activity implements View.OnClickListener{
                 }
 
                 //第五个数字
-                List<SsqBO> fifthBOs = ssqDao.getSsqListByRedBall(Integer.valueOf(fifth));
+                List<SsqBO> fifthBOs = ssqDao.getSsqListByRedBall(fifth);
                 Log.v(TAG, "第五个数字: " + fifth + "  开奖期数 = " + fifthBOs.size());
                 for (int i = 0; i < fifthBOs.size(); i++) {
                     SsqBO ssqBO =  fifthBOs.get(i);
@@ -467,7 +467,7 @@ public class SsqActivity extends Activity implements View.OnClickListener{
 
 
                 //第六个数字
-                List<SsqBO> sixthBOs = ssqDao.getSsqListByRedBall(Integer.valueOf(sixth));
+                List<SsqBO> sixthBOs = ssqDao.getSsqListByRedBall(sixth);
                 Log.v(TAG, "第六个数字: " + sixth + "  开奖期数 = " + sixthBOs.size());
                 for (int i = 0; i < sixthBOs.size(); i++) {
                     SsqBO ssqBO =  sixthBOs.get(i);
@@ -491,7 +491,7 @@ public class SsqActivity extends Activity implements View.OnClickListener{
 
                 //蓝球
                 Map<Integer, Integer> blueMap = new HashMap<Integer, Integer>();
-                List<SsqBO> blueBOs = ssqDao.getSsqListByBlueBall(Integer.valueOf(blue));
+                List<SsqBO> blueBOs = ssqDao.getSsqListByBlueBall(blue);
                 Log.v(TAG, "蓝色号码: " + blue + "  开奖期数 = " + blueBOs.size());
                 for (int i = 0; i < blueBOs.size(); i++) {
                     SsqBO firstBO =  blueBOs.get(i);
@@ -499,18 +499,74 @@ public class SsqActivity extends Activity implements View.OnClickListener{
                 }
 
 
+                //一等奖 中6+1
+                //二等奖 中6+0  当期高等奖奖金的30%
+                //三等奖 中5+1  单注奖金额固定为3000元
+                //四等级 中 4+1 或者 5+0  单注奖金额固定为200元
 
-
+                //获取红球为六，五，四的MAP
+                List<Integer> sixRedList = new ArrayList<Integer>();
+                List<Integer> fiveRedList = new ArrayList<Integer>();
+                List<Integer> fourRedList = new ArrayList<Integer>();
                 Set<Integer> key = lotteryIssueMap.keySet();
                 for(Iterator it = key.iterator();it.hasNext();){
-                    Integer s = (Integer) it.next();
-                    Integer value = lotteryIssueMap.get(s);
-                    if( value > 3){
-                        Log.v(TAG,"期号："+ s + " 次数：" + value );
+                    Integer qiHao = (Integer) it.next();
+                    Integer value = lotteryIssueMap.get(qiHao);
+
+                    if(value == 6){//中六个红球
+                        Log.v(TAG,"期号："+ qiHao + " 次数：" + value );
+                        sixRedList.add(qiHao);
+                    }else if (value == 5){//中五个红球
+                        Log.v(TAG,"期号："+ qiHao + " 次数：" + value );
+                        fiveRedList.add(qiHao);
+                    }else if( value == 4){//中四个红球
+                        Log.v(TAG,"期号："+ qiHao + " 次数：" + value );
+                        fourRedList.add(qiHao);
+                    }
+                }
+                List<Integer> firstPrizeList = new ArrayList<Integer>();
+                List<Integer> secondPrizeList = new ArrayList<Integer>();
+                List<Integer> thirdPrizeList = new ArrayList<Integer>();
+                List<Integer> fourthPrizeList = new ArrayList<Integer>();
+
+                //判断获奖 红色+蓝色
+                if(sixRedList.size() > 0){
+                    int sixSize =  sixRedList.size();
+                    for( int i = 0 ; i < sixSize ; i++) {
+                        int qiHao = sixRedList.get(i);
+                        if(blueMap.get(qiHao)!= null){
+                            firstPrizeList.add(qiHao);//添加一等奖
+                        }else {
+                            secondPrizeList.add(qiHao);//添加二等奖
+                        }
                     }
                 }
 
+                if(fiveRedList.size() > 0){
+                    int fiveSize = fiveRedList.size();
+                    for (int i = 0; i < fiveSize; i++) {
+                        int qiHao = fiveRedList.get(i);
+                        if(blueMap.get(qiHao)!= null){
+                            thirdPrizeList.add(qiHao);//添加三等奖
+                        } else {
+                            fourthPrizeList.add(qiHao);//添加四等奖
+                        }
+                    }
+                }
 
+                if(fourRedList.size() > 0){
+                    int fourSize = fourRedList.size();
+                    for (int i = 0; i < fourSize; i++) {
+                        int qiHao = fourRedList.get(i);
+                        if(blueMap.get(qiHao)!= null){
+                            fourthPrizeList.add(qiHao);//添加四等奖
+                        }
+                    }
+                }
+                ssqVO.setFirstPrizeList(firstPrizeList);
+                ssqVO.setSecondPrizeList(secondPrizeList);
+                ssqVO.setThirdPrizeList(thirdPrizeList);
+                ssqVO.setFourthPrizeList(fourthPrizeList);
 
                 Intent intent = new Intent(this,SsqSearchActivity.class);
                 intent.putExtra("ssqVO", ssqVO);

@@ -3,26 +3,25 @@ package com.mk.lottery.ui;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 import com.mk.lottery.R;
 import com.mk.lottery.dao.SsqDao;
 import com.mk.lottery.model.SsqBO;
 import com.mk.lottery.model.SsqVO;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class SsqSearchActivity extends ActionBarActivity {
-
+    private ListView listView;
+    private SimpleAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +51,71 @@ public class SsqSearchActivity extends ActionBarActivity {
         btnRed6.setText(sixth);
         btnRed7.setText(blue);
 
+        List<Integer> firstPrizeList =ssqVO.getFirstPrizeList();
+        List<Integer> secondPrizeList =ssqVO.getSecondPrizeList();
+        List<Integer> thirdPrizeList =ssqVO.getThirdPrizeList();
+        List<Integer> fourthPrizeList =ssqVO.getFourthPrizeList();
 
+        listView = (ListView) findViewById(R.id.lvListView01);
+        SsqDao ssqDao = new SsqDao(this);
+        //生成动态数组，加入数据
+        ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();
+        //一等奖
+        if (firstPrizeList != null && firstPrizeList.size() > 0) {
+            for(int i = 0 ;i < firstPrizeList.size();i++){
+                HashMap<String, Object> map = new HashMap<String, Object>();
+                SsqBO bo = ssqDao.findByLotteryIssue(firstPrizeList.get(i));
+                map.put("Prize","一等奖" + bo.getFirstAmount() + "元");
+                map.put("LotteryIssue", firstPrizeList.get(i));//期号
+                map.put("Number",bo.getRed1() + "." + bo.getRed2() + "." + bo.getRed3() + "." +
+                        bo.getRed4() + "." + bo.getRed5() + "." + bo.getRed6() + "." + bo.getBlue());
+                listItem.add(map);
+            }
+        }
+        //二等奖
+        if (secondPrizeList != null && secondPrizeList.size() > 0) {
+            for(int i = 0 ;i < secondPrizeList.size();i++){
+                HashMap<String, Object> map = new HashMap<String, Object>();
+                SsqBO bo = ssqDao.findByLotteryIssue(secondPrizeList.get(i));
+                map.put("Prize","二等奖"+bo.getSecondAmount() + "元");
+                map.put("LotteryIssue", secondPrizeList.get(i));//期号
+                map.put("Number",bo.getRed1() + "." + bo.getRed2() + "." + bo.getRed3() + "." +
+                        bo.getRed4() + "." + bo.getRed5() + "." + bo.getRed6() + "." + bo.getBlue());
+                listItem.add(map);
+            }
+        }
+        //三等奖
+        if (thirdPrizeList != null && thirdPrizeList.size() > 0) {
+            for(int i = 0 ;i < thirdPrizeList.size();i++){
+                HashMap<String, Object> map = new HashMap<String, Object>();
+                SsqBO bo = ssqDao.findByLotteryIssue(thirdPrizeList.get(i));
+                map.put("Prize","三等奖3000元");
+                map.put("LotteryIssue", thirdPrizeList.get(i));//期号
+                map.put("Number",bo.getRed1() + "." + bo.getRed2() + "." + bo.getRed3() + "." +
+                        bo.getRed4() + "." + bo.getRed5() + "." + bo.getRed6() + "." + bo.getBlue());
+                listItem.add(map);
+            }
+        }
+        //四等奖
+        if (fourthPrizeList != null && fourthPrizeList.size() > 0) {
+            for(int i = 0 ;i < fourthPrizeList.size();i++){
+                HashMap<String, Object> map = new HashMap<String, Object>();
+                SsqBO bo = ssqDao.findByLotteryIssue(fourthPrizeList.get(i));
+                map.put("Prize","四等奖200元");
+                map.put("LotteryIssue", fourthPrizeList.get(i));//期号
+                map.put("Number",bo.getRed1() + "." + bo.getRed2() + "." + bo.getRed3() + "." +
+                        bo.getRed4() + "." + bo.getRed5() + "." + bo.getRed6() + "." + bo.getBlue());
+                listItem.add(map);
+            }
+        }
+
+        //生成适配器的Item和动态数组对应的元素
+        adapter = new SimpleAdapter(this, listItem, //数据源
+                R.layout.activity_ssq_search_item, //listItem的XML实现
+                new String[] {"Prize","LotteryIssue","Number"},//动态数组与item对应的子项
+                new int[] {R.id.tvSsqSearch01,R.id.tvSsqSearch02,R.id.tvSsqSearch03}  );//Item的XML文件里面对应的ID
+        //添加并显示
+        listView.setAdapter(adapter);
     }
 
 

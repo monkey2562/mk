@@ -39,8 +39,8 @@ public class DBOpenHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         //创建person表
         db.execSQL("CREATE TABLE IF NOT EXISTS ssq (id INTEGER PRIMARY KEY AUTOINCREMENT, lottery_issue INTEGER, lottery_date VARCHAR," +
-                " red_1 INTEGER, red_2 INTEGER, red_3 INTEGER, red_4 INTEGER, red_5 INTEGER, red_6 INTEGER, blue INTEGER,reds_1 INTEGER," +
-                " reds_2 INTEGER, reds_3 INTEGER, reds_4 INTEGER, reds_5 INTEGER, reds_6 INTEGER,total_amount INTEGER,pool_amount INTEGER," +
+                " red_1 VARCHAR, red_2 VARCHAR, red_3 VARCHAR, red_4 VARCHAR, red_5 VARCHAR, red_6 VARCHAR, blue VARCHAR,reds_1 VARCHAR," +
+                " reds_2 VARCHAR, reds_3 VARCHAR, reds_4 VARCHAR, reds_5 VARCHAR, reds_6 VARCHAR,total_amount INTEGER,pool_amount INTEGER," +
                 " first_count INTEGER, first_amount INTEGER, second_count INTEGER, second_amount INTEGER, " +
                 " third_count INTEGER, third_amount INTEGER, fourth_count INTEGER, fourth_amount INTEGER," +
                 " fifth_count INTEGER, fifth_amount INTEGER, sixth_count INTEGER, sixth_amount INTEGER)");
