@@ -8,13 +8,17 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.LaunchActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.MainActivity"
+            android:label="@string/app_name" >
+
         </activity>
         <activity
             android:name=".ui.SsqActivity"
@@ -26,8 +30,9 @@
         </activity>
         <activity
             android:name=".ui.SsqSearchActivity"
-            android:label="@string/title_activity_ssq_search" >
+            android:label="@string/app_name" >
         </activity>
+
     </application>
 
 </manifest>

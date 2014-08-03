@@ -611,6 +611,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="导入数据库"/>
+            <Button
+                android:id="@+id/btnRequest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="请求数据"/>
         </LinearLayout>
         <ImageButton
             android:id="@+id/btn_ssq_search"

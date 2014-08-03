@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,6 +39,15 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
     }
 
+    //不让用户按后退键
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        //屏蔽后退键
+//        if (KeyEvent.KEYCODE_BACK == event.getKeyCode()) {
+//            return true;//阻止事件继续向下分发
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -7,65 +7,65 @@ import java.sql.Timestamp;
  */
 public class SsqBO {
     /** id*/
-    private int id;
+    public int id;
     /** 开奖期号*/
-    private int lotteryIssue;
+    public int lotteryIssue;
     /** 开奖日期*/
-    private String lotteryDate;
+    public String lotteryDate;
     /** 红号1*/
-    private String red1;
+    public String red1;
     /** 红号2*/
-    private String red2;
+    public String red2;
     /** 红号3*/
-    private String red3;
+    public String red3;
     /** 红号4*/
-    private String red4;
+    public String red4;
     /** 红号5*/
-    private String red5;
+    public String red5;
     /** 红号6*/
-    private String red6;
+    public String red6;
     /** 蓝号*/
-    private String blue;
+    public String blue;
     /** 红号顺序1*/
-    private String reds1;
+    public String reds1;
     /** 红号顺序2*/
-    private String reds2;
+    public String reds2;
     /** 红号顺序3*/
-    private String reds3;
+    public String reds3;
     /** 红号顺序4*/
-    private String reds4;
+    public String reds4;
     /** 红号顺序5*/
-    private String reds5;
+    public String reds5;
     /** 红号顺序6*/
-    private String reds6;
+    public String reds6;
     /** 投注总额*/
-    private int totalAmount;
+    public int totalAmount;
     /** 奖池金额*/
-    private int poolAmount;
+    public int poolAmount;
     /** 一等奖注数*/
-    private int firstCount;
+    public int firstCount;
     /** 一等奖金额*/
-    private int firstAmount;
+    public int firstAmount;
     /** 二等奖注数*/
-    private int secondCount;
+    public int secondCount;
     /** 二等奖金额*/
-    private int secondAmount;
+    public int secondAmount;
     /** 三等奖注数*/
-    private int thirdCount;
+    public int thirdCount;
     /** 三等奖金额*/
-    private int thirdAmount;
+    public int thirdAmount;
     /** 四等奖注数*/
-    private int fourthCount;
+    public int fourthCount;
     /** 四等奖金额*/
-    private int fourthAmount;
+    public int fourthAmount;
     /** 五等奖注数*/
-    private int fifthCount;
+    public int fifthCount;
     /** 五等奖金额*/
-    private int fifthAmount;
+    public int fifthAmount;
     /** 六等奖注数*/
-    private int sixthCount;
+    public int sixthCount;
     /** 六等奖金额*/
-    private int sixthAmount;
+    public int sixthAmount;
 
     public int getId() {
         return id;

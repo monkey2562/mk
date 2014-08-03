@@ -7,6 +7,6 @@
     <string name="main">彩票顾问</string>
     <string name="title_activity_ssq">双色球</string>
     <string name="title_activity_dlt">大乐透</string>
-    <string name="title_activity_ssq_search">SsqSearchActivity</string>
+    <string name="version">版本号</string>
 
 </resources>

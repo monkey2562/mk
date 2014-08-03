@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.mk.lottery.R;
 import com.mk.lottery.model.SsqBO;
@@ -33,6 +34,10 @@ public class SsqDao {
 
     public SsqDao(){}
 
+    /**
+     * 保存双色球数据
+     * @param ssqBO
+     */
     public void save(SsqBO ssqBO) {
         db = helper.getWritableDatabase();
         db.beginTransaction();
@@ -52,10 +57,16 @@ public class SsqDao {
         db.endTransaction();
     }
 
+    /**
+     * 更新双色球数据
+     * @param ssqBO
+     */
     public void update(SsqBO ssqBO) {
         db = helper.getWritableDatabase();
         db.execSQL("update ssq set lottery_issue = ?", new Object[]{ssqBO.getLotteryIssue()});
     }
+
+
 
     /**
      * 通过ID查找
@@ -157,18 +168,70 @@ public class SsqDao {
         return null;
     }
 
+
     /**
-     * 通过红球号码查找所有带此号码的记录
-     * @param redBall 红球号码
+     * 查找所有记录
      * @return
      */
-    public List<SsqBO> getSsqListByRedBall(String redBall) {
+    public List<SsqBO> getALLSsqList() {
         List<SsqBO> ssqBOs = new ArrayList<SsqBO>();
         db = helper.getWritableDatabase();
         Cursor cursor = db.rawQuery("select id,lottery_issue,lottery_date,red_1,red_2,red_3,red_4,red_5,red_6," +
                         "blue,reds_1,reds_2,reds_3,reds_4,reds_5,reds_6,total_amount,pool_amount," +
                         "first_count,first_amount,second_count,second_amount,third_count,third_amount," +
                         "fourth_count,fourth_amount,fifth_count,fifth_amount,sixth_count,sixth_amount " +
+                        "from ssq ",null);
+        while (cursor.moveToNext()) {
+            SsqBO bo =  new SsqBO();
+            bo.setId(cursor.getInt(0));
+            bo.setLotteryIssue(cursor.getInt(1));
+            bo.setLotteryDate(cursor.getString(2));
+            bo.setRed1(cursor.getString(3));
+            bo.setRed2(cursor.getString(4));
+            bo.setRed3(cursor.getString(5));
+            bo.setRed4(cursor.getString(6));
+            bo.setRed5(cursor.getString(7));
+            bo.setRed6(cursor.getString(8));
+            bo.setBlue(cursor.getString(9));
+            bo.setReds1(cursor.getString(10));
+            bo.setReds2(cursor.getString(11));
+            bo.setReds3(cursor.getString(12));
+            bo.setReds4(cursor.getString(13));
+            bo.setReds5(cursor.getString(14));
+            bo.setReds6(cursor.getString(15));
+            bo.setTotalAmount(cursor.getInt(16));
+            bo.setPoolAmount(cursor.getInt(17));
+            bo.setFirstCount(cursor.getInt(18));
+            bo.setFirstAmount(cursor.getInt(19));
+            bo.setSecondCount(cursor.getInt(20));
+            bo.setSecondAmount(cursor.getInt(21));
+            bo.setThirdCount(cursor.getInt(22));
+            bo.setThirdAmount(cursor.getInt(23));
+            bo.setFourthCount(cursor.getInt(24));
+            bo.setFourthAmount(cursor.getInt(25));
+            bo.setFifthCount(cursor.getInt(26));
+            bo.setFifthAmount(cursor.getInt(27));
+            bo.setSixthCount(cursor.getInt(28));
+            bo.setSixthAmount(cursor.getInt(29));
+            ssqBOs.add(bo);
+        }
+        return ssqBOs;
+    }
+
+    /**
+     * 通过红球号码查找所有带此号码的记录
+     * @param redBall 红球号码
+     * @return
+     */
+    public List<SsqBO> getSsqListByRedBall(String redBall) {
+        long time = System.currentTimeMillis();
+        List<SsqBO> ssqBOs = new ArrayList<SsqBO>();
+        db = helper.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select id,lottery_issue,lottery_date,red_1,red_2,red_3,red_4,red_5,red_6," +
+                        "blue,reds_1,reds_2,reds_3,reds_4,reds_5,reds_6,total_amount,pool_amount," +
+                        "first_count,first_amount,second_count,second_amount,third_count,third_amount," +
+                        "fourth_count,fourth_amount,fifth_count,fifth_amount,sixth_count,sixth_amount " +
+//                        "from ssq where red_1=? or red_2=? or red_3=? or red_4=? or red_5=? or red_6=?",
                         "from ssq where red_1=? or red_2=? or red_3=? or red_4=? or red_5=? or red_6=?",
                 new String[]{redBall,redBall,redBall,redBall,redBall,redBall});
         while (cursor.moveToNext()) {
@@ -205,6 +268,8 @@ public class SsqDao {
             bo.setSixthAmount(cursor.getInt(29));
             ssqBOs.add(bo);
         }
+
+        Log.v("TIME","查询用时---"+String.valueOf(System.currentTimeMillis()-time));
         return ssqBOs;
     }
 
@@ -305,20 +370,17 @@ public class SsqDao {
                     bo.setSixthCount(Integer.valueOf(strs[27]));
                     bo.setSixthAmount(Integer.valueOf(strs[28]));
                     save(bo);
-
-
-//                  System.out.println(lineTxt);
                 }
                 reader.close();
                 isr.close();
                 is.close();
-                System.out.println("读取文件完毕");
+                Log.v("SsqDAO","读取文件完毕");
             }else {
-                System.out.println("读取文件流出错");
+                Log.v("SsqDAO","读取文件流出错");
             }
 
         } catch (Exception e) {
-            System.out.println("读取文件内容出错");
+            Log.v("SsqDAO","读取文件内容出错");
             e.printStackTrace();
         }
     }
@@ -351,5 +413,19 @@ public class SsqDao {
         }catch(Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 查找本地库最新的那条记录ID
+     * @return
+     */
+    public int findNewestId(){
+        int id = 0;
+        db = helper.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select id from ssq order by id desc ",null);
+        if (cursor.moveToNext()) {
+            id = cursor.getInt(0);
+        }
+        return id;
     }
 }
