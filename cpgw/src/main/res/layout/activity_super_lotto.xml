@@ -1,0 +1,354 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.mk.caipiaoguwen.cpgw.ui.SuperLottoActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:background="@drawable/title_background"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main"
+            android:textColor="@android:color/white"
+            android:textSize="22sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/tvSuperLotto01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/super_lotto"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/tvSuperLotto02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="选择5个红球,2个蓝球"
+            android:textColor="#5b071a14"
+            android:textSize="18dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:id="@+id/llSuperLotto01"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center">
+
+                <Button
+                    android:id="@+id/btnSuperLottoRed01"
+                    style="@style/redBallBtnStyle"
+                    android:text="01" />
+
+                <Button
+                    android:id="@+id/btnSuperLottoRed02"
+                    style="@style/redBallBtnStyle"
+                    android:text="02" />
+
+                <Button
+                    android:id="@+id/btnSuperLottoRed03"
+                    style="@style/redBallBtnStyle"
+                    android:text="03" />
+
+                <Button
+                    android:id="@+id/btnSuperLottoRed04"
+                    style="@style/redBallBtnStyle"
+                    android:text="04" />
+
+                <Button
+                    android:id="@+id/btnSuperLottoRed05"
+                    style="@style/redBallBtnStyle"
+                    android:text="05" />
+
+                <Button
+                    android:id="@+id/btnSuperLottoRed06"
+                    style="@style/redBallBtnStyle"
+                    android:text="06" />
+
+                <Button
+                    android:id="@+id/btnSuperLottoRed07"
+                    style="@style/redBallBtnStyle"
+                    android:text="07" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llSuperLotto02"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center">
+
+                <Button
+                    android:id="@+id/btnSuperLottoRed08"
+                    style="@style/redBallBtnStyle"
+                    android:text="08" />
+
+                <Button
+                    android:id="@+id/btnSuperLottoRed09"
+                    style="@style/redBallBtnStyle"
+                    android:text="09" />
+
+                <Button
+                    android:id="@+id/btnSuperLottoRed10"
+                    style="@style/redBallBtnStyle"
+                    android:text="10" />
+
+                <Button
+                    android:id="@+id/btnSuperLottoRed11"
+                    style="@style/redBallBtnStyle"
+                    android:text="11" />
+
+                <Button
+                    android:id="@+id/btnSuperLottoRed12"
+                    style="@style/redBallBtnStyle"
+                    android:text="12" />
+
+                <Button
+                    android:id="@+id/btnSuperLottoRed13"
+                    style="@style/redBallBtnStyle"
+                    android:text="13" />
+
+                <Button
+                    android:id="@+id/btnSuperLottoRed14"
+                    style="@style/redBallBtnStyle"
+                    android:text="14" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llSuperLotto03"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center">
+
+                <Button
+                    android:id="@+id/btnSuperLottoRed15"
+                    style="@style/redBallBtnStyle"
+                    android:text="15" />
+                <Button
+                    android:id="@+id/btnSuperLottoRed16"
+                    style="@style/redBallBtnStyle"
+                    android:text="16" />
+                <Button
+                    android:id="@+id/btnSuperLottoRed17"
+                    style="@style/redBallBtnStyle"
+                    android:text="17" />
+                <Button
+                    android:id="@+id/btnSuperLottoRed18"
+                    style="@style/redBallBtnStyle"
+                    android:text="18" />
+                <Button
+                    android:id="@+id/btnSuperLottoRed19"
+                    style="@style/redBallBtnStyle"
+                    android:text="19" />
+                <Button
+                    android:id="@+id/btnSuperLottoRed20"
+                    style="@style/redBallBtnStyle"
+                    android:text="20" />
+                <Button
+                    android:id="@+id/btnSuperLottoRed21"
+                    style="@style/redBallBtnStyle"
+                    android:text="21" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_ssq_04"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center">
+
+                <Button
+                    android:id="@+id/btnSuperLottoRed22"
+                    style="@style/redBallBtnStyle"
+                    android:text="22" />
+                <Button
+                    android:id="@+id/btnSuperLottoRed23"
+                    style="@style/redBallBtnStyle"
+                    android:text="23" />
+                <Button
+                    android:id="@+id/btnSuperLottoRed24"
+                    style="@style/redBallBtnStyle"
+                    android:text="24" />
+                <Button
+                    android:id="@+id/btnSuperLottoRed25"
+                    style="@style/redBallBtnStyle"
+                    android:text="25" />
+                <Button
+                    android:id="@+id/btnSuperLottoRed26"
+                    style="@style/redBallBtnStyle"
+                    android:text="26" />
+                <Button
+                    android:id="@+id/btnSuperLottoRed27"
+                    style="@style/redBallBtnStyle"
+                    android:text="27" />
+                <Button
+                    android:id="@+id/btnSuperLottoRed28"
+                    style="@style/redBallBtnStyle"
+                    android:text="28" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_ssq_05"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center">
+
+                <Button
+                    android:id="@+id/btnSuperLottoRed29"
+                    style="@style/redBallBtnStyle"
+                    android:text="29" />
+                <Button
+                    android:id="@+id/btnSuperLottoRed30"
+                    style="@style/redBallBtnStyle"
+                    android:text="30" />
+                <Button
+                    android:id="@+id/btnSuperLottoRed31"
+                    style="@style/redBallBtnStyle"
+                    android:text="31" />
+                <Button
+                    android:id="@+id/btnSuperLottoRed32"
+                    style="@style/redBallBtnStyle"
+                    android:text="32" />
+                <Button
+                    android:id="@+id/btnSuperLottoRed33"
+                    style="@style/redBallBtnStyle"
+                    android:text="33" />
+                <Button
+                    android:id="@+id/btnSuperLottoRed34"
+                    style="@style/redBallBtnStyle"
+                    android:text="34" />
+                <Button
+                    android:id="@+id/btnSuperLottoRed35"
+                    style="@style/redBallBtnStyle"
+                    android:text="35" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1px"
+                android:background="@color/blueBall" />
+
+            <LinearLayout
+                android:id="@+id/llSuperLotto06"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center">
+
+                <Button
+                    android:id="@+id/btnSuperLottoBlue01"
+                    style="@style/blueBallBtnStyle"
+                    android:text="01" />
+
+                <Button
+                    android:id="@+id/btnSuperLottoBlue02"
+                    style="@style/blueBallBtnStyle"
+                    android:text="02" />
+                <Button
+                    android:id="@+id/btnSuperLottoBlue03"
+                    style="@style/blueBallBtnStyle"
+                    android:text="03" />
+                <Button
+                    android:id="@+id/btnSuperLottoBlue04"
+                    style="@style/blueBallBtnStyle"
+                    android:text="04" />
+                <Button
+                    android:id="@+id/btnSuperLottoBlue05"
+                    style="@style/blueBallBtnStyle"
+                    android:text="05" />
+                <Button
+                    android:id="@+id/btnSuperLottoBlue06"
+                    style="@style/blueBallBtnStyle"
+                    android:text="06" />
+                <Button
+                    android:id="@+id/btnSuperLottoBlue07"
+                    style="@style/blueBallBtnStyle"
+                    android:text="07" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llSuperLotto07"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center">
+
+                <Button
+                    android:id="@+id/btnSuperLottoBlue08"
+                    style="@style/blueBallBtnStyle"
+                    android:text="08" />
+                <Button
+                    android:id="@+id/btnSuperLottoBlue09"
+                    style="@style/blueBallBtnStyle"
+                    android:text="09" />
+                <Button
+                    android:id="@+id/btnSuperLottoBlue10"
+                    style="@style/blueBallBtnStyle"
+                    android:text="10" />
+                <Button
+                    android:id="@+id/btnSuperLottoBlue11"
+                    style="@style/blueBallBtnStyle"
+                    android:text="11" />
+                <Button
+                    android:id="@+id/btnSuperLottoBlue12"
+                    style="@style/blueBallBtnStyle"
+                    android:text="12" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btnSuperLottoInit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="初始化" />
+
+            <Button
+                android:id="@+id/btnSuperLottoImport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="导入数据" />
+
+            <Button
+                android:id="@+id/btnSuperLottoRequest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="请求数据" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btnSuperLottoSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/button_search" />
+
+    </LinearLayout>
+</LinearLayout>

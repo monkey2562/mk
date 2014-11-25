@@ -2,15 +2,12 @@ package com.mk.lottery.ui;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 
@@ -73,12 +70,12 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         switch(position)
         {
             case 0 : //双色球
-                Intent intent = new Intent(MainActivity.this, SsqActivity.class);
+                Intent intent = new Intent(MainActivity.this, UnionLottoActivity.class);
                 startActivity(intent);
                 break;
 
             case 1 : //大乐透
-                Intent dltIntent = new Intent(MainActivity.this, DltActivity.class);
+                Intent dltIntent = new Intent(MainActivity.this, SuperLottoActivity.class);
                 startActivity(dltIntent);
                 break;
             default :

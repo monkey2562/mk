@@ -4,8 +4,8 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.mk.lottery.dao.SsqDao;
-import com.mk.lottery.model.SsqBO;
+import com.mk.lottery.dao.UnionLottoDao;
+import com.mk.lottery.model.UnionLottoBO;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -22,7 +22,7 @@ import java.io.IOException;
  */
 public class UpdateSsqDataService {
     private Context context;
-    private SsqDao ssqDao;
+    private UnionLottoDao unionLottoDao;
     public UpdateSsqDataService(Context context){
         this.context = context;
     }
@@ -44,8 +44,8 @@ public class UpdateSsqDataService {
 //            }
             //插入数据库操作
             // 1.先查找本地库最新的一期
-            ssqDao =new SsqDao(context);
-            int localNewestId = ssqDao.findNewestId();
+            unionLottoDao =new UnionLottoDao(context);
+            int localNewestId = unionLottoDao.findNewestId();
             if(lines.length == localNewestId){
                 Log.v("UpdateSsqDataService","已经是最新的数据，不需要更新");
             }else if(lines.length < localNewestId){
@@ -59,7 +59,7 @@ public class UpdateSsqDataService {
 //                        Log.v("UpdateSsqDataService",i+1 +" " + lines[i]);
                         String line = lines[i];
                         String[] column = line.split(" ");
-                        SsqBO bo = new SsqBO();
+                        UnionLottoBO bo = new UnionLottoBO();
                         bo.setLotteryIssue(Integer.valueOf(column[0]));
                         bo.setLotteryDate(column[1]);
                         bo.setRed1(column[2]);
@@ -89,7 +89,7 @@ public class UpdateSsqDataService {
                         bo.setFifthAmount(Integer.valueOf(column[26]));
                         bo.setSixthCount(Integer.valueOf(column[27]));
                         bo.setSixthAmount(Integer.valueOf(column[28]));
-                        ssqDao.save(bo);
+                        unionLottoDao.save(bo);
                     }
 
                 }

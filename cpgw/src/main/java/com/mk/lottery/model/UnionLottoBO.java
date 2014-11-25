@@ -5,9 +5,9 @@ import java.sql.Timestamp;
 /**
  * Created by Administrator on 2014/7/10.
  */
-public class SsqBO {
+public class UnionLottoBO {
     /** id*/
-    public int id;
+    public int _id;
     /** 开奖期号*/
     public int lotteryIssue;
     /** 开奖日期*/
@@ -68,11 +68,11 @@ public class SsqBO {
     public int sixthAmount;
 
     public int getId() {
-        return id;
+        return _id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this._id = id;
     }
 
     public int getLotteryIssue() {

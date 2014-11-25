@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.mk.lottery.R;
-import com.mk.lottery.model.SsqBO;
+import com.mk.lottery.model.UnionLottoBO;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -20,50 +20,50 @@ import java.util.List;
 /**
  * Created by mk on 2014/7/10.
  */
-public class SsqDao {
+public class UnionLottoDao {
 
     private DBOpenHelper helper;
     private SQLiteDatabase db;
     private Context context;
 
 
-    public SsqDao(Context context) {
+    public UnionLottoDao(Context context) {
         helper = new DBOpenHelper(context);
         this.context = context;
     }
 
-    public SsqDao(){}
+    public UnionLottoDao(){}
 
     /**
      * 保存双色球数据
-     * @param ssqBO
+     * @param unionLottoBO
      */
-    public void save(SsqBO ssqBO) {
+    public void save(UnionLottoBO unionLottoBO) {
         db = helper.getWritableDatabase();
         db.beginTransaction();
-        db.execSQL("insert into ssq (lottery_issue,lottery_date,red_1,red_2,red_3,red_4,red_5,red_6," +
+        db.execSQL("insert into union_lotto (lottery_issue,lottery_date,red_1,red_2,red_3,red_4,red_5,red_6," +
                         "blue,reds_1,reds_2,reds_3,reds_4,reds_5,reds_6,total_amount,pool_amount," +
                         "first_count,first_amount,second_count,second_amount,third_count,third_amount," +
                         "fourth_count,fourth_amount,fifth_count,fifth_amount,sixth_count,sixth_amount)" +
                         "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-                new Object[] { ssqBO.getLotteryIssue(), ssqBO.getLotteryDate(),ssqBO.getRed1(),ssqBO.getRed2(),
-                        ssqBO.getRed3(),ssqBO.getRed4(),ssqBO.getRed5(),ssqBO.getRed6(),ssqBO.getBlue(),
-                        ssqBO.getReds1(),ssqBO.getReds2(),ssqBO.getReds3(),ssqBO.getReds4(),ssqBO.getReds5(),
-                        ssqBO.getReds6(),ssqBO.getTotalAmount(), ssqBO.getPoolAmount(),
-                        ssqBO.getFirstCount(),ssqBO.getFirstAmount(),ssqBO.getSecondCount(),ssqBO.getSecondAmount(),
-                        ssqBO.getThirdCount(),ssqBO.getThirdAmount(),ssqBO.getFourthCount(),ssqBO.getFourthAmount(),
-                        ssqBO.getFifthCount(), ssqBO.getFifthAmount(),ssqBO.getSixthCount(),ssqBO.getSixthAmount()});
+                new Object[] { unionLottoBO.getLotteryIssue(), unionLottoBO.getLotteryDate(), unionLottoBO.getRed1(), unionLottoBO.getRed2(),
+                        unionLottoBO.getRed3(), unionLottoBO.getRed4(), unionLottoBO.getRed5(), unionLottoBO.getRed6(), unionLottoBO.getBlue(),
+                        unionLottoBO.getReds1(), unionLottoBO.getReds2(), unionLottoBO.getReds3(), unionLottoBO.getReds4(), unionLottoBO.getReds5(),
+                        unionLottoBO.getReds6(), unionLottoBO.getTotalAmount(), unionLottoBO.getPoolAmount(),
+                        unionLottoBO.getFirstCount(), unionLottoBO.getFirstAmount(), unionLottoBO.getSecondCount(), unionLottoBO.getSecondAmount(),
+                        unionLottoBO.getThirdCount(), unionLottoBO.getThirdAmount(), unionLottoBO.getFourthCount(), unionLottoBO.getFourthAmount(),
+                        unionLottoBO.getFifthCount(), unionLottoBO.getFifthAmount(), unionLottoBO.getSixthCount(), unionLottoBO.getSixthAmount()});
         db.setTransactionSuccessful();
         db.endTransaction();
     }
 
     /**
      * 更新双色球数据
-     * @param ssqBO
+     * @param unionLottoBO
      */
-    public void update(SsqBO ssqBO) {
+    public void update(UnionLottoBO unionLottoBO) {
         db = helper.getWritableDatabase();
-        db.execSQL("update ssq set lottery_issue = ?", new Object[]{ssqBO.getLotteryIssue()});
+        db.execSQL("update union_lotto set lottery_issue = ?", new Object[]{unionLottoBO.getLotteryIssue()});
     }
 
 
@@ -73,15 +73,16 @@ public class SsqDao {
      * @param id
      * @return
      */
-    public SsqBO find(int id) {
+    public UnionLottoBO find(int id) {
         db = helper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select id,lottery_issue,lottery_date,red_1,red_2,red_3,red_4,red_5,red_6," +
+        Cursor cursor = db.rawQuery("select _id,lottery_issue,lottery_date,red_1,red_2,red_3,red_4,red_5,red_6," +
                         "blue,reds_1,reds_2,reds_3,reds_4,reds_5,reds_6,total_amount,pool_amount," +
                         "first_count,first_amount,second_count,second_amount,third_count,third_amount," +
-                        "fourth_count,fourth_amount,fifth_count,fifth_amount,sixth_count,sixth_amount from ssq where id = ? ",
+                        "fourth_count,fourth_amount,fifth_count,fifth_amount,sixth_count,sixth_amount " +
+                        "from union_lotto where _id = ? ",
                 new String[]{String.valueOf(id)});
         if (cursor.moveToNext()) {
-            SsqBO bo = new SsqBO();
+            UnionLottoBO bo = new UnionLottoBO();
 //            bo.setLotteryIssue(cursor.getInt(cursor.getColumnIndex("lottery_issue")));
             bo.setId(cursor.getInt(0));
             bo.setLotteryIssue(cursor.getInt(1));
@@ -123,15 +124,16 @@ public class SsqDao {
      * @param lotteryIssue 期号
      * @return
      */
-    public SsqBO findByLotteryIssue(int lotteryIssue) {
+    public UnionLottoBO findByLotteryIssue(int lotteryIssue) {
         db = helper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select id,lottery_issue,lottery_date,red_1,red_2,red_3,red_4,red_5,red_6," +
+        Cursor cursor = db.rawQuery("select _id,lottery_issue,lottery_date,red_1,red_2,red_3,red_4,red_5,red_6," +
                         "blue,reds_1,reds_2,reds_3,reds_4,reds_5,reds_6,total_amount,pool_amount," +
                         "first_count,first_amount,second_count,second_amount,third_count,third_amount," +
-                        "fourth_count,fourth_amount,fifth_count,fifth_amount,sixth_count,sixth_amount from ssq where lottery_issue = ? ",
+                        "fourth_count,fourth_amount,fifth_count,fifth_amount,sixth_count,sixth_amount " +
+                        "from union_lotto where lottery_issue = ? ",
                 new String[]{String.valueOf(lotteryIssue)});
         if (cursor.moveToNext()) {
-            SsqBO bo = new SsqBO();
+            UnionLottoBO bo = new UnionLottoBO();
 //            bo.setLotteryIssue(cursor.getInt(cursor.getColumnIndex("lottery_issue")));
             bo.setId(cursor.getInt(0));
             bo.setLotteryIssue(cursor.getInt(1));
@@ -173,16 +175,16 @@ public class SsqDao {
      * 查找所有记录
      * @return
      */
-    public List<SsqBO> getALLSsqList() {
-        List<SsqBO> ssqBOs = new ArrayList<SsqBO>();
+    public List<UnionLottoBO> getALLSsqList() {
+        List<UnionLottoBO> unionLottoBOs = new ArrayList<UnionLottoBO>();
         db = helper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select id,lottery_issue,lottery_date,red_1,red_2,red_3,red_4,red_5,red_6," +
+        Cursor cursor = db.rawQuery("select _id,lottery_issue,lottery_date,red_1,red_2,red_3,red_4,red_5,red_6," +
                         "blue,reds_1,reds_2,reds_3,reds_4,reds_5,reds_6,total_amount,pool_amount," +
                         "first_count,first_amount,second_count,second_amount,third_count,third_amount," +
                         "fourth_count,fourth_amount,fifth_count,fifth_amount,sixth_count,sixth_amount " +
-                        "from ssq ",null);
+                        "from union_lotto ",null);
         while (cursor.moveToNext()) {
-            SsqBO bo =  new SsqBO();
+            UnionLottoBO bo =  new UnionLottoBO();
             bo.setId(cursor.getInt(0));
             bo.setLotteryIssue(cursor.getInt(1));
             bo.setLotteryDate(cursor.getString(2));
@@ -213,9 +215,9 @@ public class SsqDao {
             bo.setFifthAmount(cursor.getInt(27));
             bo.setSixthCount(cursor.getInt(28));
             bo.setSixthAmount(cursor.getInt(29));
-            ssqBOs.add(bo);
+            unionLottoBOs.add(bo);
         }
-        return ssqBOs;
+        return unionLottoBOs;
     }
 
     /**
@@ -223,19 +225,19 @@ public class SsqDao {
      * @param redBall 红球号码
      * @return
      */
-    public List<SsqBO> getSsqListByRedBall(String redBall) {
+    public List<UnionLottoBO> getSsqListByRedBall(String redBall) {
         long time = System.currentTimeMillis();
-        List<SsqBO> ssqBOs = new ArrayList<SsqBO>();
+        List<UnionLottoBO> unionLottoBOs = new ArrayList<UnionLottoBO>();
         db = helper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select id,lottery_issue,lottery_date,red_1,red_2,red_3,red_4,red_5,red_6," +
+        Cursor cursor = db.rawQuery("select _id,lottery_issue,lottery_date,red_1,red_2,red_3,red_4,red_5,red_6," +
                         "blue,reds_1,reds_2,reds_3,reds_4,reds_5,reds_6,total_amount,pool_amount," +
                         "first_count,first_amount,second_count,second_amount,third_count,third_amount," +
                         "fourth_count,fourth_amount,fifth_count,fifth_amount,sixth_count,sixth_amount " +
 //                        "from ssq where red_1=? or red_2=? or red_3=? or red_4=? or red_5=? or red_6=?",
-                        "from ssq where red_1=? or red_2=? or red_3=? or red_4=? or red_5=? or red_6=?",
+                        "from union_lotto where red_1=? or red_2=? or red_3=? or red_4=? or red_5=? or red_6=?",
                 new String[]{redBall,redBall,redBall,redBall,redBall,redBall});
         while (cursor.moveToNext()) {
-            SsqBO bo =  new SsqBO();
+            UnionLottoBO bo =  new UnionLottoBO();
             bo.setId(cursor.getInt(0));
             bo.setLotteryIssue(cursor.getInt(1));
             bo.setLotteryDate(cursor.getString(2));
@@ -266,11 +268,11 @@ public class SsqDao {
             bo.setFifthAmount(cursor.getInt(27));
             bo.setSixthCount(cursor.getInt(28));
             bo.setSixthAmount(cursor.getInt(29));
-            ssqBOs.add(bo);
+            unionLottoBOs.add(bo);
         }
 
         Log.v("TIME","查询用时---"+String.valueOf(System.currentTimeMillis()-time));
-        return ssqBOs;
+        return unionLottoBOs;
     }
 
     /**
@@ -278,17 +280,17 @@ public class SsqDao {
      * @param blueBall 蓝球号码
      * @return
      */
-    public List<SsqBO> getSsqListByBlueBall(String blueBall) {
-        List<SsqBO> ssqBOs = new ArrayList<SsqBO>();
+    public List<UnionLottoBO> getSsqListByBlueBall(String blueBall) {
+        List<UnionLottoBO> unionLottoBOs = new ArrayList<UnionLottoBO>();
         db = helper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select id,lottery_issue,lottery_date,red_1,red_2,red_3,red_4,red_5,red_6," +
+        Cursor cursor = db.rawQuery("select _id,lottery_issue,lottery_date,red_1,red_2,red_3,red_4,red_5,red_6," +
                         "blue,reds_1,reds_2,reds_3,reds_4,reds_5,reds_6,total_amount,pool_amount," +
                         "first_count,first_amount,second_count,second_amount,third_count,third_amount," +
                         "fourth_count,fourth_amount,fifth_count,fifth_amount,sixth_count,sixth_amount " +
-                        "from ssq where blue=? ",
+                        "from union_lotto where blue=? ",
                 new String[]{blueBall});
         while (cursor.moveToNext()) {
-            SsqBO bo =  new SsqBO();
+            UnionLottoBO bo =  new UnionLottoBO();
             bo.setId(cursor.getInt(0));
             bo.setLotteryIssue(cursor.getInt(1));
             bo.setLotteryDate(cursor.getString(2));
@@ -319,16 +321,16 @@ public class SsqDao {
             bo.setFifthAmount(cursor.getInt(27));
             bo.setSixthCount(cursor.getInt(28));
             bo.setSixthAmount(cursor.getInt(29));
-            ssqBOs.add(bo);
+            unionLottoBOs.add(bo);
         }
-        return ssqBOs;
+        return unionLottoBOs;
     }
 
     /**
-     * 初始化TXT里面的数据
+     * 初始化双色球TXT里面的数据
      */
-    public void initData(){
-        String path = "txt/ssq.txt";
+    public void initUnionLottoData(){
+        String path = "txt/union_lotto.txt";
         try {
             AssetManager am = context.getAssets();
             InputStream is = am.open(path);
@@ -339,7 +341,7 @@ public class SsqDao {
                 String lineTxt = null;
                 while((lineTxt = reader.readLine()) != null) {
                     String[] strs = lineTxt.split(" ");
-                    SsqBO bo = new SsqBO();
+                    UnionLottoBO bo = new UnionLottoBO();
                     bo.setLotteryIssue(Integer.valueOf(strs[0]));
                     bo.setLotteryDate(strs[1]);
                     bo.setRed1(strs[2]);
@@ -374,13 +376,13 @@ public class SsqDao {
                 reader.close();
                 isr.close();
                 is.close();
-                Log.v("SsqDAO","读取文件完毕");
+                Log.v("UnionLottoDAO","读取文件完毕");
             }else {
-                Log.v("SsqDAO","读取文件流出错");
+                Log.v("UnionLottoDAO","读取文件流出错");
             }
 
         } catch (Exception e) {
-            Log.v("SsqDAO","读取文件内容出错");
+            Log.v("UnionLottoDAO","读取文件内容出错");
             e.printStackTrace();
         }
     }
@@ -422,7 +424,7 @@ public class SsqDao {
     public int findNewestId(){
         int id = 0;
         db = helper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select id from ssq order by id desc ",null);
+        Cursor cursor = db.rawQuery("select _id from union_lotto order by _id desc ",null);
         if (cursor.moveToNext()) {
             id = cursor.getInt(0);
         }

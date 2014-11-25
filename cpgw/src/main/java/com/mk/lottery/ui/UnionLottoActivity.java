@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
@@ -18,19 +17,12 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.mk.lottery.R;
-import com.mk.lottery.dao.SsqDao;
-import com.mk.lottery.model.SsqBO;
-import com.mk.lottery.model.SsqVO;
-import com.mk.lottery.util.UpdateSsqDataService;
+import com.mk.lottery.dao.UnionLottoDao;
+import com.mk.lottery.handler.RequestHandler;
+import com.mk.lottery.model.LottoVO;
+import com.mk.lottery.model.UnionLottoBO;
+import com.mk.lottery.util.MkContent;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -40,10 +32,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class SsqActivity extends Activity implements View.OnClickListener{
+public class UnionLottoActivity extends Activity implements View.OnClickListener{
     private HashMap<String,String> clickRedMap = new HashMap<String, String>();
     private HashMap<String,String> clickBlueMap = new HashMap<String, String>();
-    private static final String TAG = "SsqActivity";
+    private static final String TAG = "UnionLottoActivity";
 
     Button btnRed01,btnRed02,btnRed03,btnRed04,btnRed05,btnRed06,btnRed07,btnRed08,btnRed09,btnRed10,
             btnRed11,btnRed12,btnRed13,btnRed14,btnRed15,btnRed16,btnRed17,btnRed18,btnRed19,btnRed20,
@@ -74,7 +66,7 @@ public class SsqActivity extends Activity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_ssq);
+        setContentView(R.layout.activity_union_lotto);
         //初始化按钮
         initButton();
         //按钮设置监听事件
@@ -100,7 +92,7 @@ public class SsqActivity extends Activity implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        SsqDao ssqDao = new SsqDao(this);
+        UnionLottoDao unionLottoDao = new UnionLottoDao(this);
 
         switch (view.getId()) {
             case R.id.btn_ssq_red_01:
@@ -141,7 +133,7 @@ public class SsqActivity extends Activity implements View.OnClickListener{
                 if(clickRedMap.get(btnRed.getText().toString()) == null){
                     //判断只能按下六个红球
                     if(clickRedMap.size()>=6){
-                        Toast.makeText(SsqActivity.this, "只能选择6个红球。", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UnionLottoActivity.this, "只能选择6个红球。", Toast.LENGTH_SHORT).show();
                         break;
                     }
                     clickRedMap.put(btnRed.getText().toString(), btnRed.getText().toString());
@@ -176,7 +168,7 @@ public class SsqActivity extends Activity implements View.OnClickListener{
                 if(clickBlueMap.get(btnBlue.getText().toString()) == null){
                     //判断只能按下1个蓝球
                     if(clickBlueMap.size()>=1){
-                        Toast.makeText(SsqActivity.this,"只能选择1个蓝球。",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UnionLottoActivity.this,"只能选择1个蓝球。",Toast.LENGTH_SHORT).show();
                         break;
                     }
                     clickBlueMap.put(btnBlue.getText().toString(),btnBlue.getText().toString());
@@ -189,20 +181,20 @@ public class SsqActivity extends Activity implements View.OnClickListener{
                 }
                 break;
             case R.id.btn_ssq_init://初始化数据库
-                ssqDao.initData();
+                unionLottoDao.initUnionLottoData();
                 break;
             case R.id.btn_ssq_import://把raw里面的数据文件拷贝到databases文件夹下
-                ssqDao.importDatabase();
-                Toast.makeText(SsqActivity.this,"数据库移动完成！！！",Toast.LENGTH_SHORT).show();
+                unionLottoDao.importDatabase();
+                Toast.makeText(UnionLottoActivity.this,"数据库移动完成！！！",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_ssq_search://查询按钮
-                search(ssqDao);
+                search(unionLottoDao);
                break;
 
             //请求网站数据
             case R.id.btnRequest:
                 //启动线程
-                Runnable r = new RequestHandler();
+                Runnable r = new RequestHandler(UnionLottoActivity.this, RequestHandler.UPDATE_TYPE_UNION_LOTTO);
                 Thread thread = new Thread(r);
                 thread.start();
 
@@ -373,7 +365,7 @@ public class SsqActivity extends Activity implements View.OnClickListener{
         btnBlue16.setTypeface(typeFace);
     }
 
-    void search(SsqDao ssqDao){
+    void search(UnionLottoDao unionLottoDao){
         //判断是否有6个红球和1个蓝球
 //                if(clickRedMap.size() < 6 ){
 //                    Toast.makeText(SsqActivity.this,"必须选择6个红球！",Toast.LENGTH_SHORT).show();
@@ -405,32 +397,32 @@ public class SsqActivity extends Activity implements View.OnClickListener{
         Log.v("TIME","排序..." + String.valueOf(System.currentTimeMillis()-currentTime));
 
         int temp = 1;
-        SsqVO ssqVO = new SsqVO();
+        LottoVO lottoVO = new LottoVO();
         for(Map.Entry<String,String> mapping:mappingList){
             System.out.println(mapping.getKey()+":"+mapping.getValue());
             switch (temp) {
                 case 1:
-                    ssqVO.setFirst(mapping.getValue());
+                    lottoVO.setFirst(mapping.getValue());
                     temp++;
                     break;
                 case 2:
-                    ssqVO.setSecond(mapping.getValue());
+                    lottoVO.setSecond(mapping.getValue());
                     temp++;
                     break;
                 case 3:
-                    ssqVO.setThird(mapping.getValue());
+                    lottoVO.setThird(mapping.getValue());
                     temp++;
                     break;
                 case 4:
-                    ssqVO.setFourth(mapping.getValue());
+                    lottoVO.setFourth(mapping.getValue());
                     temp++;
                     break;
                 case 5:
-                    ssqVO.setFifth(mapping.getValue());
+                    lottoVO.setFifth(mapping.getValue());
                     temp++;
                     break;
                 case 6:
-                    ssqVO.setSixth(mapping.getValue());
+                    lottoVO.setSixth(mapping.getValue());
                     temp++;
                     break;
                 default:
@@ -440,100 +432,100 @@ public class SsqActivity extends Activity implements View.OnClickListener{
         Set<Map.Entry<String, String>>  set  = clickBlueMap.entrySet();
         for (Iterator<Map.Entry<String, String>> it = set.iterator(); it.hasNext();) {
             Map.Entry<String, String> entry = (Map.Entry<String, String>) it.next();
-            ssqVO.setBlue(entry.getValue());
+            lottoVO.setSeventh(entry.getValue());
         }
 
         Log.v("TIME","封装红球蓝球..." + String.valueOf(System.currentTimeMillis()-currentTime));
 
-        String first = ssqVO.getFirst();
-        String second = ssqVO.getSecond();
-        String third = ssqVO.getThird();
-        String fourth = ssqVO.getFourth();
-        String fifth = ssqVO.getFifth();
-        String sixth = ssqVO.getSixth();
-        String blue = ssqVO.getBlue();
+        String first = lottoVO.getFirst();
+        String second = lottoVO.getSecond();
+        String third = lottoVO.getThird();
+        String fourth = lottoVO.getFourth();
+        String fifth = lottoVO.getFifth();
+        String sixth = lottoVO.getSixth();
+        String blue = lottoVO.getSeventh();
         //用于统计期号--中几个红球
         Map<Integer, Integer> lotteryIssueMap = new HashMap<Integer, Integer>();
         //第一个数字
-        List<SsqBO> firstBOs = ssqDao.getSsqListByRedBall(first);
+        List<UnionLottoBO> firstBOs = unionLottoDao.getSsqListByRedBall(first);
         Log.v(TAG, "第一个数字: " + first + "  开奖期数 = " + firstBOs.size());
-        for (SsqBO firstBO : firstBOs) {
+        for (UnionLottoBO firstBO : firstBOs) {
 
             lotteryIssueMap.put(firstBO.lotteryIssue, 1);
         }
         Log.v("TIME","第一个数字..." + String.valueOf(System.currentTimeMillis()-currentTime));
         //第二个数字
-        List<SsqBO> secondBOs = ssqDao.getSsqListByRedBall(second);
+        List<UnionLottoBO> secondBOs = unionLottoDao.getSsqListByRedBall(second);
         Log.v(TAG,"第二个数字: "+second +"  开奖期数 = " + secondBOs.size());
-        for (SsqBO ssqBO : secondBOs) {
+        for (UnionLottoBO unionLottoBO : secondBOs) {
             //判断期号有相同的再MAP VALUE上面加上1
-            if(lotteryIssueMap.get(ssqBO.lotteryIssue)!=null){
+            if(lotteryIssueMap.get(unionLottoBO.lotteryIssue)!=null){
                 //给相应的MAP值加1
-                lotteryIssueMap.put(ssqBO.lotteryIssue,lotteryIssueMap.get(ssqBO.lotteryIssue).intValue()+1);
+                lotteryIssueMap.put(unionLottoBO.lotteryIssue,lotteryIssueMap.get(unionLottoBO.lotteryIssue).intValue()+1);
             } else {
-                lotteryIssueMap.put(ssqBO.lotteryIssue, 1);
+                lotteryIssueMap.put(unionLottoBO.lotteryIssue, 1);
             }
         }
         Log.v("TIME","第二个数字..." + String.valueOf(System.currentTimeMillis()-currentTime));
         //第三个数字
-        List<SsqBO> thirdBOs = ssqDao.getSsqListByRedBall(third);
+        List<UnionLottoBO> thirdBOs = unionLottoDao.getSsqListByRedBall(third);
         Log.v(TAG, "第三个数字: " + third + "  开奖期数 = " + thirdBOs.size());
-        for (SsqBO ssqBO : thirdBOs) {
+        for (UnionLottoBO unionLottoBO : thirdBOs) {
             //判断期号有相同的再MAP VALUE上面加上1
-            if(lotteryIssueMap.get(ssqBO.lotteryIssue)!=null){
+            if(lotteryIssueMap.get(unionLottoBO.lotteryIssue)!=null){
                 //给相应的MAP值加1
-                lotteryIssueMap.put(ssqBO.lotteryIssue,lotteryIssueMap.get(ssqBO.lotteryIssue).intValue()+1);
+                lotteryIssueMap.put(unionLottoBO.lotteryIssue,lotteryIssueMap.get(unionLottoBO.lotteryIssue).intValue()+1);
             } else {
-                lotteryIssueMap.put(ssqBO.lotteryIssue, 1);
+                lotteryIssueMap.put(unionLottoBO.lotteryIssue, 1);
             }
         }
         Log.v("TIME","第三个数字..." + String.valueOf(System.currentTimeMillis()-currentTime));
         //第四个数字
-        List<SsqBO> fourthBOs = ssqDao.getSsqListByRedBall(fourth);
+        List<UnionLottoBO> fourthBOs = unionLottoDao.getSsqListByRedBall(fourth);
         Log.v(TAG, "第四个数字: " + fourth + "  开奖期数 = " + fourthBOs.size());
-        for (SsqBO ssqBO : fourthBOs) {
+        for (UnionLottoBO unionLottoBO : fourthBOs) {
             //判断期号有相同的再MAP VALUE上面加上1
-            if(lotteryIssueMap.get(ssqBO.lotteryIssue)!=null){
+            if(lotteryIssueMap.get(unionLottoBO.lotteryIssue)!=null){
                 //给相应的MAP值加1
-                lotteryIssueMap.put(ssqBO.lotteryIssue,lotteryIssueMap.get(ssqBO.lotteryIssue).intValue()+1);
+                lotteryIssueMap.put(unionLottoBO.lotteryIssue,lotteryIssueMap.get(unionLottoBO.lotteryIssue).intValue()+1);
             } else {
-                lotteryIssueMap.put(ssqBO.lotteryIssue, 1);
+                lotteryIssueMap.put(unionLottoBO.lotteryIssue, 1);
             }
         }
         Log.v("TIME","第四个数字..." + String.valueOf(System.currentTimeMillis()-currentTime));
         //第五个数字
-        List<SsqBO> fifthBOs = ssqDao.getSsqListByRedBall(fifth);
+        List<UnionLottoBO> fifthBOs = unionLottoDao.getSsqListByRedBall(fifth);
         Log.v(TAG, "第五个数字: " + fifth + "  开奖期数 = " + fifthBOs.size());
-        for (SsqBO ssqBO : fifthBOs) {
+        for (UnionLottoBO unionLottoBO : fifthBOs) {
             //判断期号有相同的再MAP VALUE上面加上1
-            if(lotteryIssueMap.get(ssqBO.lotteryIssue)!=null){
+            if(lotteryIssueMap.get(unionLottoBO.lotteryIssue)!=null){
                 //给相应的MAP值加1
-                lotteryIssueMap.put(ssqBO.lotteryIssue,lotteryIssueMap.get(ssqBO.lotteryIssue).intValue()+1);
+                lotteryIssueMap.put(unionLottoBO.lotteryIssue,lotteryIssueMap.get(unionLottoBO.lotteryIssue).intValue()+1);
             } else {
-                lotteryIssueMap.put(ssqBO.lotteryIssue, 1);
+                lotteryIssueMap.put(unionLottoBO.lotteryIssue, 1);
             }
         }
         Log.v("TIME","第五个数字..." + String.valueOf(System.currentTimeMillis()-currentTime));
 
         //第六个数字
-        List<SsqBO> sixthBOs = ssqDao.getSsqListByRedBall(sixth);
+        List<UnionLottoBO> sixthBOs = unionLottoDao.getSsqListByRedBall(sixth);
         Log.v(TAG, "第六个数字: " + sixth + "  开奖期数 = " + sixthBOs.size());
-        for (SsqBO ssqBO : sixthBOs) {
+        for (UnionLottoBO unionLottoBO : sixthBOs) {
             //判断期号有相同的再MAP VALUE上面加上1
-            if(lotteryIssueMap.get(ssqBO.lotteryIssue)!=null){
+            if(lotteryIssueMap.get(unionLottoBO.lotteryIssue)!=null){
                 //给相应的MAP值加1
-                lotteryIssueMap.put(ssqBO.lotteryIssue,lotteryIssueMap.get(ssqBO.lotteryIssue).intValue()+1);
+                lotteryIssueMap.put(unionLottoBO.lotteryIssue,lotteryIssueMap.get(unionLottoBO.lotteryIssue).intValue()+1);
             } else {
-                lotteryIssueMap.put(ssqBO.lotteryIssue, 1);
+                lotteryIssueMap.put(unionLottoBO.lotteryIssue, 1);
             }
         }
         Log.v("TIME","第六个数字..." + String.valueOf(System.currentTimeMillis()-currentTime));
 
         //蓝球
         Map<Integer, Integer> blueMap = new HashMap<Integer, Integer>();
-        List<SsqBO> blueBOs = ssqDao.getSsqListByBlueBall(blue);
+        List<UnionLottoBO> blueBOs = unionLottoDao.getSsqListByBlueBall(blue);
         Log.v(TAG, "蓝色号码: " + blue + "  开奖期数 = " + blueBOs.size());
-        for (SsqBO firstBO : blueBOs) {
+        for (UnionLottoBO firstBO : blueBOs) {
             blueMap.put(firstBO.lotteryIssue, 1);
         }
 
@@ -604,13 +596,13 @@ public class SsqActivity extends Activity implements View.OnClickListener{
                 }
             }
         }
-        ssqVO.setFirstPrizeList(firstPrizeList);
-        ssqVO.setSecondPrizeList(secondPrizeList);
-        ssqVO.setThirdPrizeList(thirdPrizeList);
-        ssqVO.setFourthPrizeList(fourthPrizeList);
-
-        Intent intent = new Intent(this,SsqSearchActivity.class);
-        intent.putExtra("ssqVO", ssqVO);
+        lottoVO.setFirstPrizeList(firstPrizeList);
+        lottoVO.setSecondPrizeList(secondPrizeList);
+        lottoVO.setThirdPrizeList(thirdPrizeList);
+        lottoVO.setFourthPrizeList(fourthPrizeList);
+        lottoVO.setType(MkContent.LOTTERY_TYPE_UNION_LOTTO);
+        Intent intent = new Intent(this,UnionLottoResultActivity.class);
+        intent.putExtra("lottoVO", lottoVO);
         startActivity(intent);
         Log.v("TIME","end..." + String.valueOf(System.currentTimeMillis()-currentTime));
         Toast.makeText(this,"查询用时：" + String.valueOf(System.currentTimeMillis()-currentTime),Toast.LENGTH_SHORT).show();
@@ -618,25 +610,6 @@ public class SsqActivity extends Activity implements View.OnClickListener{
     }
 
 
-    /**
-     * 查询更新的线程
-     * 0.4以后不能在主线程处理网络相关
-     * @author quan
-     *
-     */
-    private class RequestHandler implements Runnable {
-        Message msg = new Message();
-        @Override
-        public void run() {
-//            Looper.prepare();
-//            msg.what = 1;
-//            handler.sendMessage(msg);
-//            Looper.loop();
-            UpdateSsqDataService service = new UpdateSsqDataService(SsqActivity.this);
-            service.updateData();
-        }
-
-    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

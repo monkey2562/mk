@@ -8,25 +8,27 @@ import java.util.List;
  * @author Administrator
  *
  */
-public class SsqVO implements Serializable{
+public class LottoVO implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8284104476055237910L;
-    /** 选中的第一个红球*/
+    /** 类型 1-双色球 2-大乐透*/
+    private int type;
+    /** 选中的第一个球*/
 	private String first;
-    /** 选中的第二个红球*/
+    /** 选中的第二个球*/
 	private String second;
-    /** 选中的第三个红球*/
+    /** 选中的第三个球*/
 	private String third;
-    /** 选中的第四个红球*/
+    /** 选中的第四个球*/
 	private String fourth;
-    /** 选中的第五个红球*/
+    /** 选中的第五个球*/
 	private String fifth;
-    /** 选中的第六个红球*/
+    /** 选中的第六个球*/
 	private String sixth;
-    /** 选中的蓝球*/
-	private String blue;
+    /** 选中的第七个球*/
+	private String seventh;
     /** 一等奖期号LIST*/
     private List<Integer> firstPrizeList;
     /** 二等奖期号LIST*/
@@ -35,6 +37,10 @@ public class SsqVO implements Serializable{
     private List<Integer> thirdPrizeList;
     /** 四等奖期号LIST*/
     private List<Integer> fourthPrizeList;
+    /** 五等奖期号LIST*/
+    private List<Integer> fifthPrizeList;
+    /** 六等奖期号LIST*/
+    private List<Integer> sixthPrizeList;
 
 
 	public String getFirst() {
@@ -73,12 +79,14 @@ public class SsqVO implements Serializable{
 	public void setSixth(String sixth) {
 		this.sixth = sixth;
 	}
-	public String getBlue() {
-		return blue;
-	}
-	public void setBlue(String blue) {
-		this.blue = blue;
-	}
+
+    public String getSeventh() {
+        return seventh;
+    }
+
+    public void setSeventh(String seventh) {
+        this.seventh = seventh;
+    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -114,5 +122,29 @@ public class SsqVO implements Serializable{
 
     public void setFourthPrizeList(List<Integer> fourthPrizeList) {
         this.fourthPrizeList = fourthPrizeList;
+    }
+
+    public List<Integer> getFifthPrizeList() {
+        return fifthPrizeList;
+    }
+
+    public void setFifthPrizeList(List<Integer> fifthPrizeList) {
+        this.fifthPrizeList = fifthPrizeList;
+    }
+
+    public List<Integer> getSixthPrizeList() {
+        return sixthPrizeList;
+    }
+
+    public void setSixthPrizeList(List<Integer> sixthPrizeList) {
+        this.sixthPrizeList = sixthPrizeList;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

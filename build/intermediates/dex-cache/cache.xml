@@ -2,11 +2,11 @@
 <pre-dex-items>
 
     <item
-        dex="D:\workspace\AndroidStudioProjects\mk\cpgw\build\intermediates\pre-dexed\debug\classes-330658edd0f44ad015cc4befb39b3b1936c64f41.jar"
-        jar="D:\workspace\AndroidStudioProjects\mk\cpgw\build\intermediates\exploded-aar\com.android.support\appcompat-v7\19.1.0\classes.jar"
+        dex="D:\workspace\AndroidStudioProjects\mk\cpgw\build\intermediates\pre-dexed\debug\classes-516459a617e73f19dffd4a2888c88784728d2207.jar"
+        jar="D:\workspace\AndroidStudioProjects\mk\cpgw\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\classes.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
+        sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
     <item
         dex="D:\workspace\AndroidStudioProjects\mk\Security\build\intermediates\pre-dexed\debug\classes-3836317f542368e47ec038a2068d67f8dc535a28.jar"
         jar="D:\workspace\AndroidStudioProjects\mk\Security\build\intermediates\exploded-aar\com.android.support\appcompat-v7\19.1.0\classes.jar"
@@ -14,10 +14,22 @@
         revision="19.1.0"
         sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
     <item
-        dex="D:\workspace\AndroidStudioProjects\mk\cpgw\build\intermediates\pre-dexed\debug\support-v4-19.1.0-2c06d9f9aefa956ee39b7bbf4b2f4a1387cf5624.jar"
-        jar="D:\Program Files\adt-bundle-windows\sdk\extras\android\m2repository\com\android\support\support-v4\19.1.0\support-v4-19.1.0.jar"
+        dex="D:\workspace\AndroidStudioProjects\mk\cpgw\build\intermediates\pre-dexed\debug\classes-e77f33e22c294fd389abea7a9e609455e0153b0c.jar"
+        jar="D:\workspace\AndroidStudioProjects\mk\cpgw\build\intermediates\exploded-aar\com.android.support\appcompat-v7\20.0.0\classes.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
+        sha1="f21927d22fe31889ecce94dd697a2e75b137e0ef"/>
+    <item
+        dex="D:\workspace\AndroidStudioProjects\mk\cpgw\build\intermediates\pre-dexed\debug\internal_impl-20.0.0-542c52da6931fb6b9cd56a8a3f9df46e90042dfe.jar"
+        jar="D:\workspace\AndroidStudioProjects\mk\cpgw\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\libs\internal_impl-20.0.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d"/>
+    <item
+        dex="D:\workspace\AndroidStudioProjects\mk\cpgw\build\intermediates\pre-dexed\debug\support-annotations-20.0.0-debda680d2918299669c00f2cee2dbe62c382cd0.jar"
+        jar="D:\Program Files\adt-bundle-windows\sdk\extras\android\m2repository\com\android\support\support-annotations\20.0.0\support-annotations-20.0.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="9d9013e9ff35fc3756411e62873c363c70c638fa"/>
 
 </pre-dex-items>

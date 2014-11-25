@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mk.lottery" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/app_icon"
@@ -12,27 +14,34 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ui.MainActivity"
             android:label="@string/app_name" >
-
         </activity>
         <activity
-            android:name=".ui.SsqActivity"
-            android:label="@string/title_activity_ssq" >
+            android:name=".ui.UnionLottoActivity"
+            android:label="@string/union_lotto" >
         </activity>
         <activity
-            android:name=".ui.DltActivity"
-            android:label="@string/title_activity_dlt" >
+            android:name=".ui.SuperLottoActivity"
+            android:label="@string/super_lotto" >
         </activity>
         <activity
-            android:name=".ui.SsqSearchActivity"
-            android:label="@string/app_name" >
+            android:name=".ui.SearchResultActivity"
+            android:label="@string/union_lotto" >
         </activity>
-
+        <activity
+            android:name=".ui.SuperLottoResultActivity"
+            android:label="@string/title_activity_super_lotto_result" >
+        </activity>
+        <activity
+            android:name=".ui.UnionLottoResultActivity"
+            android:label="@string/title_activity_union_lotto_result" >
+        </activity>
     </application>
 
 </manifest>

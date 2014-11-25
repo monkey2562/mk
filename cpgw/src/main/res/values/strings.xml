@@ -5,8 +5,10 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">设置</string>
     <string name="main">彩票顾问</string>
-    <string name="title_activity_ssq">双色球</string>
-    <string name="title_activity_dlt">大乐透</string>
+    <string name="union_lotto">双色球</string>
+    <string name="super_lotto">大乐透</string>
     <string name="version">版本号</string>
+    <string name="title_activity_super_lotto_result">SuperLottoResultActivity</string>
+    <string name="title_activity_union_lotto_result">UnionLottoResultActivity</string>
 
 </resources>
